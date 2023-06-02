@@ -8,11 +8,17 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     scene =  new QGraphicsScene();
-    scene->setSceneRect(0,7,686,400);
-    ui->graphicsView->setScene(scene);
-    scene->addRect(scene->sceneRect());
 
-    fondo = new QGraphicsPixmapItem(QPixmap("ruta_de_la_imagen"));
+    ui->graphicsView->setScene(scene);
+
+
+    fondo = new QGraphicsPixmapItem(QPixmap(":/imagenes/wallpaperbetter.com_7680x4320.jpg"));
+    scene->addItem(fondo);
+    fondo->setPixmap(QPixmap(":/imagenes/wallpaperbetter.com_7680x4320.jpg").scaled(1000, 800));
+    fondo->setPos(-150, -180);
+
+    scene->setSceneRect(0,7,686,400);
+    scene->addRect(scene->sceneRect());
 
 
 

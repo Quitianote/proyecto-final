@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>menu</class>
+ <widget class="QDialog" name="menu">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>450</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QGraphicsView" name="graphicsView">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>600</width>
+     <height>450</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="boton_play">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>190</y>
+     <width>121</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;Copperplate Gothic Bold&quot;;
+background-color: rgb(197, 197, 197);
+border-color: rgb(77, 77, 77);
+border-right-color: rgb(255, 255, 255);
+border-left-color: rgb(17, 17, 17);
+border-top-color: rgb(102, 102, 102);
+
+</string>
+   </property>
+   <property name="text">
+    <string>PLAY</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="boton_score">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>260</y>
+     <width>121</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;Copperplate Gothic Bold&quot;;
+background-color: rgb(197, 197, 197);
+border-color: rgb(77, 77, 77);
+border-right-color: rgb(255, 255, 255);
+border-left-color: rgb(17, 17, 17);
+border-top-color: rgb(102, 102, 102);</string>
+   </property>
+   <property name="text">
+    <string>SCORE</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

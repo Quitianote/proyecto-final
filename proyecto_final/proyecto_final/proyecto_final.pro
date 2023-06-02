@@ -13,6 +13,7 @@ SOURCES += \
     jeffrey.cpp \
     main.cpp \
     mainwindow.cpp \
+    menu.cpp \
     politico.cpp \
     soldado.cpp \
     suelo.cpp
@@ -21,12 +22,14 @@ HEADERS += \
     bala.h \
     jeffrey.h \
     mainwindow.h \
+    menu.h \
     politico.h \
     soldado.h \
     suelo.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    menu.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

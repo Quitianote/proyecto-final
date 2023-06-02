@@ -12,6 +12,7 @@
 #include "bala.h"
 #include "soldado.h"
 #include "politico.h"
+#include "menu.h"
 
 
 
@@ -37,6 +38,9 @@ public:
 
 private slots:
     void bala_mov(); 
+    //void on_pushButton_clicked();
+    //void verify(menu *N);
+
 
 private:
     Ui::MainWindow *ui;

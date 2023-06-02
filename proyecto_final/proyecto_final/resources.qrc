@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>imagenes/wallpaperbetter.com_7680x4320.jpg</file>
+        <file>imagenes/fondo_menu.png</file>
     </qresource>
 </RCC>

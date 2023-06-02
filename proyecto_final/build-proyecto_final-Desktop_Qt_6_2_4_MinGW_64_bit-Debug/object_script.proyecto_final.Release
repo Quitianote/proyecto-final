@@ -1,0 +1,11 @@
+release/bala.o
+release/jeffrey.o
+release/main.o
+release/mainwindow.o
+release/menu.o
+release/politico.o
+release/soldado.o
+release/suelo.o
+release/qrc_resources.o
+release/moc_mainwindow.o
+release/moc_menu.o
