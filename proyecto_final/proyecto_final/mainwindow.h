@@ -36,9 +36,7 @@ public:
     void caida();
 
 private slots:
-    void bala_mov();
-
-    void mov_sold();  
+    void bala_mov(); 
 
 private:
     Ui::MainWindow *ui;
@@ -56,6 +54,8 @@ private:
 
     QTimer *timer_sold;
     QTimer *timer_bala;
+
+    QGraphicsPixmapItem* fondo;
 
 };
 

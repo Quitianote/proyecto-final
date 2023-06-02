@@ -32,3 +32,9 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    imagenes/wallpaperbetter.com_7680x4320.jpg
+
+RESOURCES += \
+    resources.qrc
