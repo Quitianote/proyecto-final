@@ -26,13 +26,14 @@ public:
     menu(QWidget *parent = nullptr);
     ~menu();
 private slots:
-    void on_GifButton_clicked();
+   // void on_GifButton_clicked();
 
-    void on();
+    void jugar();
 
 private:
     Ui::menu *ui;
     QGraphicsScene *scene;
+
 
     QGraphicsPixmapItem* fondo;
 };

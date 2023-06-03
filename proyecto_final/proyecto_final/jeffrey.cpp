@@ -12,7 +12,7 @@ void jeffrey::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 
 jeffrey::jeffrey(QGraphicsItem *carr):QGraphicsPixmapItem(carr)
 {
-    //setPixmap(QPixmap(":/images/character.png"));
+    setPixmap(QPixmap(":/imagenes/jeffrey.png"));
 }
 
 

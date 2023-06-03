@@ -36,6 +36,8 @@ public:
 
     void caida();
 
+    void crear_suelo();
+
 private slots:
     void bala_mov(); 
     //void on_pushButton_clicked();
@@ -48,6 +50,8 @@ private:
 
     suelo *piso;
     jeffrey *jugador;
+    politico *politico_1;
+    soldado *soldado_1;
 
     int vel;
     int vel_auto;
@@ -55,11 +59,14 @@ private:
     QList<suelo*> orilla;
     QList<suelo*> lista_piso;
     QList<bala*> balas;
+    QList<suelo*> cubos;
 
     QTimer *timer_sold;
     QTimer *timer_bala;
 
     QGraphicsPixmapItem* fondo;
+
+
 
 };
 

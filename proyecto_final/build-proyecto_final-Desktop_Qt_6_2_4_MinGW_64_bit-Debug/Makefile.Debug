@@ -72,7 +72,9 @@ OBJECTS       = debug/bala.o \
 		debug/moc_mainwindow.o \
 		debug/moc_menu.o
 
-DIST          = imagenes/wallpaperbetter.com_7680x4320.jpg ..\proyecto_final\bala.h \
+DIST          = imagenes/jeffrey.png \
+		imagenes/soldado_1.png \
+		imagenes/wallpaperbetter.com_7680x4320.jpg ..\proyecto_final\bala.h \
 		..\proyecto_final\jeffrey.h \
 		..\proyecto_final\mainwindow.h \
 		..\proyecto_final\menu.h \
@@ -130,8 +132,12 @@ compiler_rcc_clean:
 	-$(DEL_FILE) debug\qrc_resources.cpp
 debug/qrc_resources.cpp: ../proyecto_final/resources.qrc \
 		D:/qt/6.2.4/mingw_64/bin/rcc.exe \
+		../proyecto_final/imagenes/politico_1.png \
 		../proyecto_final/imagenes/wallpaperbetter.com_7680x4320.jpg \
-		../proyecto_final/imagenes/fondo_menu.png
+		../proyecto_final/imagenes/cubo.png \
+		../proyecto_final/imagenes/soldado_1.png \
+		../proyecto_final/imagenes/fondo_menu.png \
+		../proyecto_final/imagenes/jeffrey.png
 	D:\qt\6.2.4\mingw_64\bin\rcc.exe -name resources ..\proyecto_final\resources.qrc -o debug\qrc_resources.cpp
 
 compiler_moc_predefs_make_all: debug/moc_predefs.h

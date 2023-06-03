@@ -21,6 +21,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 private:
     int x,y;
+
 };
 
 #endif // SUELO_H

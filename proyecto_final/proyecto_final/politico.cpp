@@ -12,7 +12,7 @@ void politico::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 politico::politico(QGraphicsItem *carr):QGraphicsPixmapItem(carr)
 {
-    //setPixmap(QPixmap(":/images/character.png"));
+    setPixmap(QPixmap(":/imagenes/politico_1.png"));
 }
 
 

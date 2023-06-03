@@ -16,6 +16,9 @@ menu::menu(QWidget *parent) :
     fondo->setPixmap(QPixmap(":/imagenes/fondo_menu.png").scaled(600, 450));
     fondo->setPos(-150, -180);
 
+    connect(ui->boton_play, &QPushButton::clicked, this, menu::jugar);
+
+
 }
 
 menu::~menu()
@@ -23,7 +26,7 @@ menu::~menu()
     delete ui;
 }
 
-void menu::on_backButton_clicked()
+void menu::jugar()
 {
     MainWindow *N =  new MainWindow;
     N->show();
