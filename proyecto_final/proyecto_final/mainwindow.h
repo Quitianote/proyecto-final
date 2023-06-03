@@ -34,6 +34,8 @@ public:
 
     void keyPressEvent(QKeyEvent *event);
 
+    void keyReleaseEvent(QKeyEvent *event);
+
     void crear_suelo();
 
     bool col_y();
@@ -44,6 +46,9 @@ private slots:
     void salto();
 
     void caida();
+
+    void mov_lat_D();
+    void mov_lat_A();
     //void on_pushButton_clicked();
     //void verify(menu *N);
 
@@ -69,6 +74,8 @@ private:
     QTimer *timer_sold;
     QTimer *timer_bala;
     QTimer *timer_caida;
+    QTimer *timer_lat_D;
+    QTimer *timer_lat_A;
 
     QGraphicsPixmapItem* fondo;
 

@@ -50,10 +50,16 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer_caida,SIGNAL(timeout()),this, SLOT(caida()));
     timer_caida->start(15);
 
+    timer_lat_A = new QTimer;
+    connect(timer_lat_A,SIGNAL(timeout()),this, SLOT(mov_lat_A()));
+
+    timer_lat_D = new QTimer;
+    connect(timer_lat_D,SIGNAL(timeout()),this, SLOT(mov_lat_D()));
 
 
+    vel = 10;
+    int vel_A = -2;
 
-    vel=10;
 }
 
 MainWindow::~MainWindow()
@@ -61,19 +67,33 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::keyReleaseEvent(QKeyEvent *event){
+
+    if(event->key()== Qt::Key_A){
+        timer_lat_A->stop();
+    }
+
+    if(event->key()== Qt::Key_D){
+        timer_lat_D->stop();
+    }
+
+}
+
 void MainWindow::keyPressEvent(QKeyEvent *event){
     if(event->key()== Qt::Key_F4) close();
 
-    if(event->key()== Qt::Key_A /*&& jugador->getX()>4*/){
-        jugador->setX(jugador->getX()-vel);
+    if(event->key()== Qt::Key_A ){
+        if(!timer_lat_A->isActive()) timer_lat_A->start(10);
+        //jugador->setX(jugador->getX()-vel);
     }
 
     if(event->key()== Qt::Key_S && jugador->getY()<scene->height()-40){
         jugador->setY(jugador->getY()+vel);
     }
 
-    if(event->key()== Qt::Key_D && jugador->getX()<scene->width()-34){
-        jugador->setX(jugador->getX()+vel);
+    if(event->key()== Qt::Key_D /*&& jugador->getX()<scene->width()-34*/){
+        if(!timer_lat_D->isActive()) timer_lat_D->start(10);
+        //jugador->setX(jugador->getX()+vel);
     }
 
     if(event->key()== Qt::Key_W /*&& jugador->getY()>-150*/){
@@ -81,7 +101,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
     }
 
     if(event->key()== Qt::Key_Space){
-        if(!timer_caida->isActive()) timer_caida->start(15);
+        if(!timer_caida->isActive()){
+            jugador->setVy(2);
+            timer_caida->start(15);
+        }
     }
 
 
@@ -101,25 +124,53 @@ void MainWindow::salto()
 
 void MainWindow::caida()
 {
-    colisiones = jugador->collidingItems();
-    colisiones.removeAll(jugador);
-
-
-
-    if(colisiones.isEmpty()) {
-        jugador->setVy(jugador->getVy() + /*jugador->getVy()*/9.8*0.1);
+    if(!col_y()) {
+        jugador->setVy(jugador->getVy() + 9.8*0.1);
         jugador->setY(jugador->getY() + jugador->getVy()*0.1);
+
         if(jugador->getY() < 400) jugador->posicion();
         else timer_caida->stop();
 
     }
-    else {
-        timer_caida->stop();
+}
+
+void MainWindow::mov_lat_D()
+{
+    float vel_D = 20;
+    jugador->setX(jugador->getX() + vel_D*0.1);
+    jugador->posicion();
+}
+
+void MainWindow::mov_lat_A()
+{
+    float vel_D = 20;
+    jugador->setX(jugador->getX() - vel_D*0.1);
+    jugador->posicion();
+}
+
+bool MainWindow::col_y()
+{
+    QList<suelo*>::iterator
+            it (cubos.begin()),
+            end (cubos.end());
+
+
+
+    for (; it != end; ++it) {
+
+        if (jugador->collidesWithItem((*it)) && jugador->getY() + jugador->boundingRect().height() >= (*it)->getY()) {
+            return true;
+        }
     }
 
 
-    colisiones.clear();
+    return false;
+
+
 }
+
+
+
 /*void bola::mover(float dt)
 {
     //if(py<=0) vy = -vy;
@@ -250,3 +301,5 @@ void MainWindow::crear_suelo()
 
 
 }
+
+
