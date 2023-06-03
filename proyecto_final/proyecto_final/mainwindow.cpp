@@ -16,6 +16,9 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addItem(fondo);
     fondo->setPixmap(QPixmap(":/imagenes/wallpaperbetter.com_7680x4320.jpg").scaled(1100, 800));
     fondo->setPos(-250, -180);
+    fondo->setFlag(QGraphicsItem::ItemIsMovable, false);
+
+
 /*
     scene->setSceneRect(0,7,686,400);
     scene->addRect(scene->sceneRect());
@@ -31,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
     soldado_1 = new soldado(nullptr);
     soldado_1->setScale(1.3);
 
-    jugador->posicion(110, -58);
+    jugador->posicion(110, -70);
     scene->addItem(jugador);
 
     politico_1->posicion(50, 270);
@@ -73,17 +76,59 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
         jugador->setX(jugador->getX()+vel);
     }
 
-    if(event->key()== Qt::Key_W && jugador->getY()>-150){
+    if(event->key()== Qt::Key_W /*&& jugador->getY()>-150*/){
         jugador->setY(jugador->getY()-vel);
     }
 
     if(event->key()== Qt::Key_Space){
-
+        if(!timer_caida->isActive()) timer_caida->start(15);
     }
 
 
     jugador->posicion();
 }
+
+
+void MainWindow::bala_mov()
+{
+
+}
+
+void MainWindow::salto()
+{
+
+}
+
+void MainWindow::caida()
+{
+    colisiones = jugador->collidingItems();
+    colisiones.removeAll(jugador);
+
+
+
+    if(colisiones.isEmpty()) {
+        jugador->setVy(jugador->getVy() + /*jugador->getVy()*/9.8*0.1);
+        jugador->setY(jugador->getY() + jugador->getVy()*0.1);
+        if(jugador->getY() < 400) jugador->posicion();
+        else timer_caida->stop();
+
+    }
+    else {
+        timer_caida->stop();
+    }
+
+
+    colisiones.clear();
+}
+/*void bola::mover(float dt)
+{
+    //if(py<=0) vy = -vy;
+    vy = vy - G*dt;
+    if (int(vy) <= 0 && int(py) <= rad){ py=rad; vy=0;}
+    px += vx*dt;
+    py += vy*dt;
+}
+*/
 
 void MainWindow::crear_suelo()
 {
@@ -205,36 +250,3 @@ void MainWindow::crear_suelo()
 
 
 }
-
-void MainWindow::bala_mov()
-{
-
-}
-
-void MainWindow::salto()
-{
-
-}
-
-void MainWindow::caida()
-{
-    //colisiones = jugador->collidingItems();
-
-    jugador->setVy(jugador->getVy() + /*jugador->getVy()*/9.8*0.1);
-    jugador->setY(jugador->getY() + jugador->getVy()*0.1);
-    if(jugador->getY() < 400) jugador->posicion();
-    else timer_caida->stop();
-
-
-
-    //colisiones.clear();
-}
-/*void bola::mover(float dt)
-{
-    //if(py<=0) vy = -vy;
-    vy = vy - G*dt;
-    if (int(vy) <= 0 && int(py) <= rad){ py=rad; vy=0;}
-    px += vx*dt;
-    py += vy*dt;
-}
-*/

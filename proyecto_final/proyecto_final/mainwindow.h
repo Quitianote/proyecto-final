@@ -36,6 +36,8 @@ public:
 
     void crear_suelo();
 
+    bool col_y();
+
 private slots:
     void bala_mov(); 
 
