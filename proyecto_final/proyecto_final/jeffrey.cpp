@@ -9,6 +9,16 @@ void jeffrey::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     painter->drawPixmap(0, 0, pixmap());
 }
 
+void jeffrey::setVy(float _vy)
+{
+    vy = _vy;
+}
+
+float jeffrey::getVy()
+{
+    return vy;
+}
+
 
 jeffrey::jeffrey(QGraphicsItem *carr):QGraphicsPixmapItem(carr)
 {

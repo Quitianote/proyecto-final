@@ -34,12 +34,14 @@ public:
 
     void keyPressEvent(QKeyEvent *event);
 
-    void caida();
-
     void crear_suelo();
 
 private slots:
     void bala_mov(); 
+
+    void salto();
+
+    void caida();
     //void on_pushButton_clicked();
     //void verify(menu *N);
 
@@ -60,9 +62,11 @@ private:
     QList<suelo*> lista_piso;
     QList<bala*> balas;
     QList<suelo*> cubos;
+    QList<QGraphicsItem*> colisiones;
 
     QTimer *timer_sold;
     QTimer *timer_bala;
+    QTimer *timer_caida;
 
     QGraphicsPixmapItem* fondo;
 

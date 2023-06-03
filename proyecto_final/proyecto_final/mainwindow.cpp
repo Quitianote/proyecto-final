@@ -40,9 +40,14 @@ MainWindow::MainWindow(QWidget *parent)
     soldado_1->posicion(25, 150);
     scene->addItem(soldado_1);
 
-
-
     crear_suelo();
+
+    jugador->setVy(2);
+    timer_caida =  new QTimer;
+    connect(timer_caida,SIGNAL(timeout()),this, SLOT(caida()));
+    timer_caida->start(15);
+
+
 
 
     vel=10;
@@ -56,7 +61,7 @@ MainWindow::~MainWindow()
 void MainWindow::keyPressEvent(QKeyEvent *event){
     if(event->key()== Qt::Key_F4) close();
 
-    if(event->key()== Qt::Key_A && jugador->getX()>4){
+    if(event->key()== Qt::Key_A /*&& jugador->getX()>4*/){
         jugador->setX(jugador->getX()-vel);
     }
 
@@ -172,9 +177,9 @@ void MainWindow::crear_suelo()
     scene->addItem(cubos.last());
 
     x = 170;
-    y -= 55;
+    y -= 55*2;
 
-    for(int i = 0; i < 3; i ++){//izquierda centro
+    for(int i = 0; i < 2; i ++){//izquierda centro
         cubos.append(new suelo(nullptr));
         cubos.last()->posicion(-170, y);
         cubos.last()->setScale(1.3);
@@ -184,13 +189,19 @@ void MainWindow::crear_suelo()
 
     x -= 55*7;
 
-    for(int i = 0; i < 2; i ++){//izquierda centro arriba
-        cubos.append(new suelo(nullptr));
-        cubos.last()->posicion(x, y);
-        cubos.last()->setScale(1.3);
-        scene->addItem(cubos.last());
-        y -= 55;
-    }
+    //izquierda centro arriba
+    cubos.append(new suelo(nullptr));
+    cubos.last()->posicion(x, y);
+    cubos.last()->setScale(1.3);
+    scene->addItem(cubos.last());
+    y -= 55;
+
+
+    cubos.append(new suelo(nullptr));
+    cubos.last()->posicion(-58*2, 55*4);
+    cubos.last()->setScale(1.3);
+    scene->addItem(cubos.last());
+    y -= 55;
 
 
 }
@@ -199,3 +210,31 @@ void MainWindow::bala_mov()
 {
 
 }
+
+void MainWindow::salto()
+{
+
+}
+
+void MainWindow::caida()
+{
+    //colisiones = jugador->collidingItems();
+
+    jugador->setVy(jugador->getVy() + /*jugador->getVy()*/9.8*0.1);
+    jugador->setY(jugador->getY() + jugador->getVy()*0.1);
+    if(jugador->getY() < 400) jugador->posicion();
+    else timer_caida->stop();
+
+
+
+    //colisiones.clear();
+}
+/*void bola::mover(float dt)
+{
+    //if(py<=0) vy = -vy;
+    vy = vy - G*dt;
+    if (int(vy) <= 0 && int(py) <= rad){ py=rad; vy=0;}
+    px += vx*dt;
+    py += vy*dt;
+}
+*/

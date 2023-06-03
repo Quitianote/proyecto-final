@@ -26,11 +26,18 @@ public:
 
     void empujar();
 
+    void setVy(float _vy);
+    float getVy();
+
+
+
 private slots:
     void tos();
 
 private:
     int x,y;
+
+    float vy = 0;
 };
 
 
