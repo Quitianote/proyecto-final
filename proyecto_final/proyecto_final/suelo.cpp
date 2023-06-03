@@ -15,7 +15,7 @@ void suelo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 
 suelo::suelo(QGraphicsItem *carr):QGraphicsPixmapItem(carr)
 {
-    setPixmap(QPixmap(":/imagenes/cubo.png"));
+    setPixmap(QPixmap(":/imagenes/cubo - copia.png"));
 }
 
 void suelo::posicion()

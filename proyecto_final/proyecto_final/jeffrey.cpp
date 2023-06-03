@@ -22,7 +22,7 @@ float jeffrey::getVy()
 
 jeffrey::jeffrey(QGraphicsItem *carr):QGraphicsPixmapItem(carr)
 {
-    setPixmap(QPixmap(":/imagenes/jeffrey.png"));
+    setPixmap(QPixmap(":/imagenes/jeffrey-derecha - copia.png"));
 }
 
 

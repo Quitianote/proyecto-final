@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
     soldado_1 = new soldado(nullptr);
     soldado_1->setScale(1.3);
 
-    jugador->posicion(110, -70);
+    jugador->posicion(110, -100);
     scene->addItem(jugador);
 
     politico_1->posicion(50, 270);
@@ -132,6 +132,7 @@ void MainWindow::caida()
         else timer_caida->stop();
 
     }
+    else jugador->setVy(2);
 }
 
 void MainWindow::mov_lat_D()
@@ -143,9 +144,11 @@ void MainWindow::mov_lat_D()
 
 void MainWindow::mov_lat_A()
 {
-    float vel_D = 20;
-    jugador->setX(jugador->getX() - vel_D*0.1);
-    jugador->posicion();
+    if(!col_x_A()){
+        float vel_D = 20;
+        jugador->setX(jugador->getX() - vel_D*0.1);
+        jugador->posicion();
+    }
 }
 
 bool MainWindow::col_y()
@@ -153,19 +156,48 @@ bool MainWindow::col_y()
     QList<suelo*>::iterator
             it (cubos.begin()),
             end (cubos.end());
+    for (; it != end; ++it) {
 
-
-
+        if (jugador->collidesWithItem((*it)) && jugador->getY() + jugador->boundingRect().height() <= (*it)->getY()) {
+            return true;
+        }
+    }
+    return false;
+}
+/*
+bool MainWindow::col_y()//original
+{
+    QList<suelo*>::iterator
+            it (cubos.begin()),
+            end (cubos.end());
     for (; it != end; ++it) {
 
         if (jugador->collidesWithItem((*it)) && jugador->getY() + jugador->boundingRect().height() >= (*it)->getY()) {
             return true;
         }
     }
-
-
     return false;
+}*/
 
+bool MainWindow::col_x_A()
+{
+    QList<suelo*>::iterator
+            it (cubos.begin()),
+            end (cubos.end());
+    for (; it != end; ++it) {
+
+        if (jugador->collidesWithItem((*it)) && jugador->getX() <= (*it)->getX() + (*it)->boundingRect().width()) {
+            if((*it)->getY() <= jugador->getY() + jugador->boundingRect().height()){
+                if(jugador->getY() >= (*it)->getY()) return true;
+                else if(jugador->getY() <= (*it)->getY());return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool MainWindow::col_x_D()
+{
 
 }
 

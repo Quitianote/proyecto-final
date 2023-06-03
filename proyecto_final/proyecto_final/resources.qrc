@@ -2,9 +2,13 @@
     <qresource prefix="/">
         <file>imagenes/wallpaperbetter.com_7680x4320.jpg</file>
         <file>imagenes/fondo_menu.png</file>
-        <file>imagenes/jeffrey.png</file>
         <file>imagenes/soldado_1.png</file>
         <file>imagenes/politico_1.png</file>
         <file>imagenes/cubo.png</file>
+        <file>imagenes/cubo - copia.png</file>
+        <file>imagenes/jeffrey - izquierda - copia.png</file>
+        <file>imagenes/jeffrey - izquierda.png</file>
+        <file>imagenes/jeffrey-derecha - copia.png</file>
+        <file>imagenes/jeffrey-derecha.png</file>
     </qresource>
 </RCC>

@@ -28,8 +28,6 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    bool col_est();
-
     void crear_orilla();
 
     void keyPressEvent(QKeyEvent *event);
@@ -39,6 +37,11 @@ public:
     void crear_suelo();
 
     bool col_y();
+
+    bool col_x_A();
+    bool col_x_D();
+
+
 
 private slots:
     void bala_mov(); 

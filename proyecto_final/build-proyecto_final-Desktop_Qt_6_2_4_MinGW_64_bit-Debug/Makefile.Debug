@@ -132,12 +132,16 @@ compiler_rcc_clean:
 	-$(DEL_FILE) debug\qrc_resources.cpp
 debug/qrc_resources.cpp: ../proyecto_final/resources.qrc \
 		D:/qt/6.2.4/mingw_64/bin/rcc.exe \
+		../proyecto_final/imagenes/jeffrey\ -\ izquierda.png \
+		../proyecto_final/imagenes/cubo\ -\ copia.png \
+		../proyecto_final/imagenes/soldado_1.png \
+		../proyecto_final/imagenes/jeffrey\ -\ izquierda\ -\ copia.png \
+		../proyecto_final/imagenes/jeffrey-derecha.png \
 		../proyecto_final/imagenes/politico_1.png \
 		../proyecto_final/imagenes/wallpaperbetter.com_7680x4320.jpg \
 		../proyecto_final/imagenes/cubo.png \
-		../proyecto_final/imagenes/soldado_1.png \
 		../proyecto_final/imagenes/fondo_menu.png \
-		../proyecto_final/imagenes/jeffrey.png
+		../proyecto_final/imagenes/jeffrey-derecha\ -\ copia.png
 	D:\qt\6.2.4\mingw_64\bin\rcc.exe -name resources ..\proyecto_final\resources.qrc -o debug\qrc_resources.cpp
 
 compiler_moc_predefs_make_all: debug/moc_predefs.h
