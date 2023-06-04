@@ -188,7 +188,7 @@ bool MainWindow::col_x_A()
             end (cubos.end());
     for (; it != end; ++it) {
 
-        if (jugador->collidesWithItem((*it)) && jugador->getX() <= (*it)->getX() + (*it)->boundingRect().width()) {
+        if (jugador->collidesWithItem((*it)) && jugador->getX() <= (*it)->getX() + (*it)->boundingRect().width() && jugador->getX() > (*it)->getX()) {
             if((*it)->getY() <= jugador->getY() + jugador->boundingRect().height()){
                 if(jugador->getY() >= (*it)->getY()) return true;
                 else if(jugador->getY() <= (*it)->getY());return true;
