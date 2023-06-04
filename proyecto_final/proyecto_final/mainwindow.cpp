@@ -137,9 +137,11 @@ void MainWindow::caida()
 
 void MainWindow::mov_lat_D()
 {
-    float vel_D = 20;
-    jugador->setX(jugador->getX() + vel_D*0.1);
-    jugador->posicion();
+    if(!col_x_D()){
+        float vel_D = 20;
+        jugador->setX(jugador->getX() + vel_D*0.1);
+        jugador->posicion();
+    }
 }
 
 void MainWindow::mov_lat_A()
@@ -198,7 +200,19 @@ bool MainWindow::col_x_A()
 
 bool MainWindow::col_x_D()
 {
+    QList<suelo*>::iterator
+            it (cubos.begin()),
+            end (cubos.end());
+    for (; it != end; ++it) {
 
+        if (jugador->collidesWithItem((*it)) && jugador->getX() + jugador->boundingRect().width() <= (*it)->getX()) {
+            if((*it)->getY() <= jugador->getY() + jugador->boundingRect().height()){
+                if(jugador->getY() >= (*it)->getY()) return true;
+                else if(jugador->getY() <= (*it)->getY());return true;
+            }
+        }
+    }
+    return false;
 }
 
 
