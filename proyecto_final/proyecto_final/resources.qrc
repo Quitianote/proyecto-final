@@ -10,5 +10,6 @@
         <file>imagenes/jeffrey - izquierda.png</file>
         <file>imagenes/jeffrey-derecha - copia.png</file>
         <file>imagenes/jeffrey-derecha.png</file>
+        <file>imagenes/GAME_OVER.png</file>
     </qresource>
 </RCC>

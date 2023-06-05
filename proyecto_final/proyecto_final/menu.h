@@ -22,11 +22,9 @@ class menu : public QDialog
     Q_OBJECT
 
 public:
-    //explicit menu(QWidget *parent = nullptr);
     menu(QWidget *parent = nullptr);
     ~menu();
 private slots:
-   // void on_GifButton_clicked();
 
     void jugar();
 

@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     bala.cpp \
+    game_over.cpp \
     jeffrey.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 
 HEADERS += \
     bala.h \
+    game_over.h \
     jeffrey.h \
     mainwindow.h \
     menu.h \
@@ -28,6 +30,7 @@ HEADERS += \
     suelo.h
 
 FORMS += \
+    game_over.ui \
     mainwindow.ui \
     menu.ui
 

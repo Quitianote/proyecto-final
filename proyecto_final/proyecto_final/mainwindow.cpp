@@ -86,24 +86,21 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
         if(!timer_lat_A->isActive()){
             jugador->setPixmap(QPixmap(":/imagenes/jeffrey - izquierda - copia.png"));
             timer_lat_A->start(10);
-            //jugador->setX(jugador->getX()-vel);
         }
     }
 
-    if(event->key()== Qt::Key_S && jugador->getY()<scene->height()-40){
+    /*if(event->key()== Qt::Key_S && jugador->getY()<scene->height()-40){
         jugador->setY(jugador->getY()+vel);
-    }
+    }*/
 
-    if(event->key()== Qt::Key_D /*&& jugador->getX()<scene->width()-34*/){
+    if(event->key()== Qt::Key_D){
         if(!timer_lat_D->isActive()){
             timer_lat_D->start(10);
             jugador->setPixmap(QPixmap(":/imagenes/jeffrey-derecha - copia.png"));
-            //jugador->setX(jugador->getX()+vel);
         }
     }
 
-    if(event->key()== Qt::Key_W /*&& jugador->getY()>-150*/){
-        //jugador->setY(jugador->getY()-vel);
+    if(event->key()== Qt::Key_W){
         if(!timer_salto->isActive() && col_y()){
             timer_caida->stop();
             vel = 55;
@@ -130,9 +127,15 @@ void MainWindow::bala_mov()
 
 void MainWindow::salto()
 {
-    vel -= 9.8*0.1;
-    jugador->setY(jugador->getY() - vel*0.1);
-    jugador->posicion();
+    if(!col_y_arriba()){
+        vel -= 9.8*0.1;
+        jugador->setY(jugador->getY() - vel*0.1);
+        jugador->posicion();
+    }
+    else{
+        timer_salto->stop();
+        timer_caida->start(10);
+    }
     if(vel <= 0){
         timer_salto->stop();
         timer_caida->start(10);
@@ -186,7 +189,16 @@ bool MainWindow::col_y()//mira si esta pegado al piso
 
 bool MainWindow::col_y_arriba()
 {
+    QList<suelo*>::iterator
+            it (cubos.begin()),
+            end (cubos.end());
+    for (; it != end; ++it) {
 
+        if (jugador->collidesWithItem((*it)) && jugador->getY() <= (*it)->getY() + (*it)->boundingRect().height() && jugador->getY() > (*it)->getY()) {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool MainWindow::col_x_A()
@@ -285,7 +297,7 @@ void MainWindow::crear_suelo()
     }
 
     cubos.append(new suelo(nullptr));//cubo solitario, derecha, arriba
-    cubos.last()->posicion(x + 25, 55 + 55);
+    cubos.last()->posicion(x - 25, 55 + 55);
     cubos.last()->setScale(1.3);
     scene->addItem(cubos.last());
 
@@ -354,7 +366,7 @@ void MainWindow::crear_suelo()
     y = 55*4 + 55*3;
     x = -58*2 + 55*2;
 
-    for(int i = 0; i < 9; i ++){// linea horizontal de abajo, centro
+    for(int i = 0; i < 8; i ++){// linea horizontal de abajo, centro
         cubos.append(new suelo(nullptr));
         cubos.last()->posicion(x, y);
         cubos.last()->setScale(1.3);
