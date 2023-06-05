@@ -56,9 +56,9 @@ MainWindow::MainWindow(QWidget *parent)
     timer_lat_D = new QTimer;
     connect(timer_lat_D,SIGNAL(timeout()),this, SLOT(mov_lat_D()));
 
+    timer_salto = new QTimer;
+    connect(timer_salto,SIGNAL(timeout()),this, SLOT(salto()));
 
-    vel = 10;
-    int vel_A = -2;
 
 }
 
@@ -83,8 +83,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
     if(event->key()== Qt::Key_F4) close();
 
     if(event->key()== Qt::Key_A ){
-        if(!timer_lat_A->isActive()) timer_lat_A->start(10);
-        //jugador->setX(jugador->getX()-vel);
+        if(!timer_lat_A->isActive()){
+            jugador->setPixmap(QPixmap(":/imagenes/jeffrey - izquierda - copia.png"));
+            timer_lat_A->start(10);
+            //jugador->setX(jugador->getX()-vel);
+        }
     }
 
     if(event->key()== Qt::Key_S && jugador->getY()<scene->height()-40){
@@ -92,12 +95,20 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
     }
 
     if(event->key()== Qt::Key_D /*&& jugador->getX()<scene->width()-34*/){
-        if(!timer_lat_D->isActive()) timer_lat_D->start(10);
-        //jugador->setX(jugador->getX()+vel);
+        if(!timer_lat_D->isActive()){
+            timer_lat_D->start(10);
+            jugador->setPixmap(QPixmap(":/imagenes/jeffrey-derecha - copia.png"));
+            //jugador->setX(jugador->getX()+vel);
+        }
     }
 
     if(event->key()== Qt::Key_W /*&& jugador->getY()>-150*/){
-        jugador->setY(jugador->getY()-vel);
+        //jugador->setY(jugador->getY()-vel);
+        if(!timer_salto->isActive() && col_y()){
+            timer_caida->stop();
+            vel = 55;
+            timer_salto->start(10);
+        }
     }
 
     if(event->key()== Qt::Key_Space){
@@ -119,7 +130,13 @@ void MainWindow::bala_mov()
 
 void MainWindow::salto()
 {
-
+    vel -= 9.8*0.1;
+    jugador->setY(jugador->getY() - vel*0.1);
+    jugador->posicion();
+    if(vel <= 0){
+        timer_salto->stop();
+        timer_caida->start(10);
+    }
 }
 
 void MainWindow::caida()
@@ -153,7 +170,7 @@ void MainWindow::mov_lat_A()
     }
 }
 
-bool MainWindow::col_y()
+bool MainWindow::col_y()//mira si esta pegado al piso
 {
     QList<suelo*>::iterator
             it (cubos.begin()),
@@ -166,20 +183,11 @@ bool MainWindow::col_y()
     }
     return false;
 }
-/*
-bool MainWindow::col_y()//original
-{
-    QList<suelo*>::iterator
-            it (cubos.begin()),
-            end (cubos.end());
-    for (; it != end; ++it) {
 
-        if (jugador->collidesWithItem((*it)) && jugador->getY() + jugador->boundingRect().height() >= (*it)->getY()) {
-            return true;
-        }
-    }
-    return false;
-}*/
+bool MainWindow::col_y_arriba()
+{
+
+}
 
 bool MainWindow::col_x_A()
 {
@@ -233,37 +241,37 @@ void MainWindow::crear_suelo()
     int y = 110;
 
     cubos.append(new suelo(nullptr));
-    cubos.last()->posicion(0, 0);
+    cubos.last()->posicion(0, 0 + 55);
     cubos.last()->setScale(1.3);
     scene->addItem(cubos.last());
 
     cubos.append(new suelo(nullptr));
-    cubos.last()->posicion(0, -55);
+    cubos.last()->posicion(0, -55 + 55);
     cubos.last()->setScale(1.3);
     scene->addItem(cubos.last());
 
     cubos.append(new suelo(nullptr));
-    cubos.last()->posicion(55, -55);
+    cubos.last()->posicion(55, -55 + 55);
     cubos.last()->setScale(1.3);
     scene->addItem(cubos.last());
 
     cubos.append(new suelo(nullptr));
-    cubos.last()->posicion(-55, -55);
+    cubos.last()->posicion(-55, -55 + 55);
     cubos.last()->setScale(1.3);
     scene->addItem(cubos.last());
 
     cubos.append(new suelo(nullptr));
-    cubos.last()->posicion(0, -110);
+    cubos.last()->posicion(0, -110 + 55);
     cubos.last()->setScale(1.3);
     scene->addItem(cubos.last());
 
     cubos.append(new suelo(nullptr));//arriba centro
-    cubos.last()->posicion(220, -150);
+    cubos.last()->posicion(220, -150 + 55);
     cubos.last()->setScale(1.3);
     scene->addItem(cubos.last());
 
     cubos.append(new suelo(nullptr));//arriba centro
-    cubos.last()->posicion(275, -150);
+    cubos.last()->posicion(275, -150 + 55);
     cubos.last()->setScale(1.3);
     scene->addItem(cubos.last());
 
@@ -271,13 +279,13 @@ void MainWindow::crear_suelo()
     for(int i = 0; i < 10; i ++){//arriba izquierda
         cubos.append(new suelo(nullptr));
         cubos.last()->setScale(1.3);
-        cubos.last()->posicion(-110 + x,0);
+        cubos.last()->posicion(-110 + x,0 + 55);
         scene->addItem(cubos.last());
         x += 55;
     }
 
     cubos.append(new suelo(nullptr));//cubo solitario, derecha, arriba
-    cubos.last()->posicion(x + 25, 55);
+    cubos.last()->posicion(x + 25, 55 + 55);
     cubos.last()->setScale(1.3);
     scene->addItem(cubos.last());
 
@@ -285,7 +293,7 @@ void MainWindow::crear_suelo()
 
     for(int i = 0; i < 4; i ++){//derecha del todo
         cubos.append(new suelo(nullptr));
-        cubos.last()->posicion(x, y);
+        cubos.last()->posicion(x, y + 55);
         cubos.last()->setScale(1.3);
         scene->addItem(cubos.last());
         y += 55;
@@ -296,7 +304,7 @@ void MainWindow::crear_suelo()
 
     for(int i = 0; i < 3; i ++){//derecha del todo -1
         cubos.append(new suelo(nullptr));
-        cubos.last()->posicion(x, y);
+        cubos.last()->posicion(x, y + 55);
         cubos.last()->setScale(1.3);
         scene->addItem(cubos.last());
         y += 55;
@@ -307,14 +315,14 @@ void MainWindow::crear_suelo()
 
     for(int i = 0; i < 2; i ++){//derecha del todo -2
         cubos.append(new suelo(nullptr));
-        cubos.last()->posicion(x, y);
+        cubos.last()->posicion(x, y + 55);
         cubos.last()->setScale(1.3);
         scene->addItem(cubos.last());
         y += 55;
     }
 
     cubos.append(new suelo(nullptr));//derecha del todo -3
-    cubos.last()->posicion(x - 55, y - 55);
+    cubos.last()->posicion(x - 55, y - 55 + 55);
     cubos.last()->setScale(1.3);
     scene->addItem(cubos.last());
 
@@ -323,7 +331,7 @@ void MainWindow::crear_suelo()
 
     for(int i = 0; i < 2; i ++){//izquierda centro
         cubos.append(new suelo(nullptr));
-        cubos.last()->posicion(-170, y);
+        cubos.last()->posicion(-170, y + 55);
         cubos.last()->setScale(1.3);
         scene->addItem(cubos.last());
         y -= 55;
@@ -333,17 +341,26 @@ void MainWindow::crear_suelo()
 
     //izquierda centro arriba
     cubos.append(new suelo(nullptr));
-    cubos.last()->posicion(x, y);
+    cubos.last()->posicion(x, y + 55);
     cubos.last()->setScale(1.3);
     scene->addItem(cubos.last());
     y -= 55;
 
 
-    cubos.append(new suelo(nullptr));
-    cubos.last()->posicion(-58*2, 55*4);
+    cubos.append(new suelo(nullptr));//izquierda centro, abajo de centro arriba
+    cubos.last()->posicion(-58*2, 55*4 + 55);
     cubos.last()->setScale(1.3);
     scene->addItem(cubos.last());
-    y -= 55;
+    y = 55*4 + 55*3;
+    x = -58*2 + 55*2;
+
+    for(int i = 0; i < 9; i ++){// linea horizontal de abajo, centro
+        cubos.append(new suelo(nullptr));
+        cubos.last()->posicion(x, y);
+        cubos.last()->setScale(1.3);
+        scene->addItem(cubos.last());
+        x += 55;
+    }
 
 
 }

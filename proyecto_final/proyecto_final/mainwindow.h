@@ -37,6 +37,7 @@ public:
     void crear_suelo();
 
     bool col_y();
+    bool col_y_arriba();
 
     bool col_x_A();
     bool col_x_D();
@@ -79,6 +80,7 @@ private:
     QTimer *timer_caida;
     QTimer *timer_lat_D;
     QTimer *timer_lat_A;
+    QTimer *timer_salto;
 
     QGraphicsPixmapItem* fondo;
 
