@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addItem(jugador);
 
     soldados.append(new soldado(nullptr));
-    soldados.last()->posicion(25, 310);
+    soldados.last()->posicion(200, 310);
     soldados.last()->setScale(1.3);
     scene->addItem(soldados.last());
 
@@ -239,6 +239,7 @@ void MainWindow::fric_A()
         //vA = 60;
         if(col_y_sold()){
             vA = 9.8*0.1;
+            soldado_1->setVy(2);
         }
 
     }
@@ -259,6 +260,7 @@ void MainWindow::fric_A()
         //vA = 60;
         if(col_y_sold()){
             vA = 9.8*0.1;
+            soldado_1->setVy(2);
         }
 
     }
