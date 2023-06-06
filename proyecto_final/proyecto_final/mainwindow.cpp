@@ -53,11 +53,10 @@ MainWindow::MainWindow(QWidget *parent)
     timer_salto = new QTimer;
     connect(timer_salto,SIGNAL(timeout()),this, SLOT(salto()));
 
-   /* timer_pol = new QTimer;
-    connect(timer_pol,SIGNAL(timeout()),this, SLOT(coli_pol()));*/
+    timer_tiempo = new QTimer;
+    connect(timer_tiempo,SIGNAL(timeout()),this, SLOT(tiempo()));
 
-
-
+    timer_tiempo->start(1000);
 
 }
 
@@ -69,10 +68,30 @@ MainWindow::~MainWindow()
 void MainWindow::puntaje()
 {
     puntos ++;
+    puntos += time_;
     ui->puntaje->setText(QString::number(puntos));
+    if(!timer_tiempo->isActive()){
+        time_ = 11;
+        timer_tiempo->start(1000);
+    }
+    else{
+        timer_tiempo->stop();
+        time_ = 11;
+        timer_tiempo->start(1000);
+    }
 }
 
+int MainWindow::getPuntos()
+{
+    return puntos;
+}
 
+void MainWindow::tiempo()
+{
+    time_ --;
+    ui->tiempo->setText(QString::number(time_));
+    if(time_ == 0) timer_tiempo->stop();
+}
 
 void MainWindow::keyReleaseEvent(QKeyEvent *event){
 
@@ -157,6 +176,7 @@ void MainWindow::caida()
         else{
             timer_caida->stop();
             game_over *N =  new game_over;
+            N->setTotal(puntos);
             N->show();
             this->close();
         }

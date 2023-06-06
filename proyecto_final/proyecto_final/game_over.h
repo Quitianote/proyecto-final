@@ -27,11 +27,15 @@ public:
 
     void keyPressEvent(QKeyEvent *event);
 
+    void setTotal(int newTotal);
+
 private:
     Ui::game_over *ui;
     QGraphicsScene *scene;
 
     QGraphicsPixmapItem *fondo;
+
+    int total;
 };
 
 #endif // GAME_OVER_H

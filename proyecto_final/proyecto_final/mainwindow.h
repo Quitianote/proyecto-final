@@ -46,12 +46,16 @@ public:
 
     void puntaje();
 
+    int getPuntos();
+
 private slots:
     void bala_mov(); 
 
     void salto();
 
     void caida();
+
+    void tiempo();
 
     void mov_lat_D();
     void mov_lat_A();
@@ -72,6 +76,12 @@ private:
 
     int puntos = 0;
 
+    int time_ = 11;
+
+    int poli = 0;
+
+    int sold = 0;
+
     QList<suelo*> orilla;
     QList<suelo*> lista_piso;
     QList<bala*> balas;
@@ -84,7 +94,7 @@ private:
     QTimer *timer_lat_D;
     QTimer *timer_lat_A;
     QTimer *timer_salto;
-    QTimer *timer_pol;
+    QTimer *timer_tiempo;
 
     QGraphicsPixmapItem* fondo;
 };

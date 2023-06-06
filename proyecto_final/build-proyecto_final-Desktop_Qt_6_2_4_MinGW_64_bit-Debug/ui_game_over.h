@@ -13,6 +13,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QGraphicsView>
+#include <QtWidgets/QLabel>
 
 QT_BEGIN_NAMESPACE
 
@@ -20,6 +21,7 @@ class Ui_game_over
 {
 public:
     QGraphicsView *graphicsView;
+    QLabel *total;
 
     void setupUi(QDialog *game_over)
     {
@@ -29,6 +31,11 @@ public:
         graphicsView = new QGraphicsView(game_over);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
         graphicsView->setGeometry(QRect(0, 0, 800, 600));
+        total = new QLabel(game_over);
+        total->setObjectName(QString::fromUtf8("total"));
+        total->setGeometry(QRect(90, 240, 51, 21));
+        total->setStyleSheet(QString::fromUtf8("font: 20pt \"Impact\";\n"
+"background-color: rgb(255, 255, 255);"));
 
         retranslateUi(game_over);
 
@@ -38,6 +45,7 @@ public:
     void retranslateUi(QDialog *game_over)
     {
         game_over->setWindowTitle(QCoreApplication::translate("game_over", "Dialog", nullptr));
+        total->setText(QCoreApplication::translate("game_over", "TextLabel", nullptr));
     } // retranslateUi
 
 };

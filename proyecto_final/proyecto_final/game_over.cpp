@@ -1,5 +1,6 @@
 #include "game_over.h"
 #include "ui_game_over.h"
+#include "mainwindow.h"
 
 game_over::game_over(QWidget *parent) :
     QDialog(parent),
@@ -13,6 +14,8 @@ game_over::game_over(QWidget *parent) :
     scene->addItem(fondo);
     fondo->setPixmap(QPixmap(":/imagenes/game_over.png").scaled(800, 600));
     fondo->setPos(-150, -180);
+    MainWindow *n = new MainWindow(nullptr);
+    ui->total->setText(QString::number(total));
 }
 
 game_over::~game_over()
@@ -30,4 +33,9 @@ void game_over::keyPressEvent(QKeyEvent *event)
 
 
 
+}
+
+void game_over::setTotal(int newTotal)
+{
+    total = newTotal;
 }

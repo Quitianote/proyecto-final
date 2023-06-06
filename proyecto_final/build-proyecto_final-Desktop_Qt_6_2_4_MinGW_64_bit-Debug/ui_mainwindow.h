@@ -27,6 +27,8 @@ public:
     QGraphicsView *graphicsView;
     QLabel *puntaje;
     QLabel *label;
+    QLabel *tiempo;
+    QLabel *label_2;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -50,6 +52,16 @@ public:
         label->setGeometry(QRect(820, 80, 101, 31));
         label->setStyleSheet(QString::fromUtf8("font: 20pt \"Impact\";\n"
 "color: rgb(255, 255, 255);"));
+        tiempo = new QLabel(centralwidget);
+        tiempo->setObjectName(QString::fromUtf8("tiempo"));
+        tiempo->setGeometry(QRect(930, 30, 61, 31));
+        tiempo->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
+"font: 20pt \"Impact\";"));
+        label_2 = new QLabel(centralwidget);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setGeometry(QRect(820, 30, 101, 31));
+        label_2->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
+"font: 20pt \"Impact\";"));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -69,6 +81,8 @@ public:
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         puntaje->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "PUNTAJE:", nullptr));
+        tiempo->setText(QCoreApplication::translate("MainWindow", "10", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "TIEMPO:", nullptr));
     } // retranslateUi
 
 };
