@@ -141,12 +141,14 @@ release/qrc_resources.cpp: ../proyecto_final/resources.qrc \
 		../proyecto_final/imagenes/jeffrey\ -\ izquierda.png \
 		../proyecto_final/imagenes/cubo\ -\ copia.png \
 		../proyecto_final/imagenes/soldado_1.png \
+		../proyecto_final/imagenes/game_over.png \
 		../proyecto_final/imagenes/jeffrey\ -\ izquierda\ -\ copia.png \
 		../proyecto_final/imagenes/jeffrey-derecha.png \
+		../proyecto_final/imagenes/politico_1\ -\ copia.png \
 		../proyecto_final/imagenes/politico_1.png \
 		../proyecto_final/imagenes/wallpaperbetter.com_7680x4320.jpg \
 		../proyecto_final/imagenes/cubo.png \
-		../proyecto_final/imagenes/GAME_OVER.png \
+		../proyecto_final/imagenes/soldado_1\ -\ copia.png \
 		../proyecto_final/imagenes/fondo_menu.png \
 		../proyecto_final/imagenes/jeffrey-derecha\ -\ copia.png
 	D:\qt\6.2.4\mingw_64\bin\rcc.exe -name resources ..\proyecto_final\resources.qrc -o release\qrc_resources.cpp
@@ -1059,7 +1061,18 @@ release/game_over.o: ../proyecto_final/game_over.cpp ../proyecto_final/game_over
 		../proyecto_final/soldado.h \
 		../proyecto_final/politico.h \
 		../proyecto_final/menu.h \
-		ui_game_over.h
+		ui_game_over.h \
+		D:/qt/6.2.4/mingw_64/include/QtCore/QVariant \
+		D:/qt/6.2.4/mingw_64/include/QtWidgets/QApplication \
+		D:/qt/6.2.4/mingw_64/include/QtWidgets/qapplication.h \
+		D:/qt/6.2.4/mingw_64/include/QtGui/qguiapplication.h \
+		D:/qt/6.2.4/mingw_64/include/QtGui/qinputmethod.h \
+		D:/qt/6.2.4/mingw_64/include/QtGui/qguiapplication_platform.h \
+		D:/qt/6.2.4/mingw_64/include/QtWidgets/QGraphicsView \
+		D:/qt/6.2.4/mingw_64/include/QtWidgets/qgraphicsview.h \
+		D:/qt/6.2.4/mingw_64/include/QtWidgets/qscrollarea.h \
+		D:/qt/6.2.4/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		D:/qt/6.2.4/mingw_64/include/QtWidgets/qframe.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\game_over.o ..\proyecto_final\game_over.cpp
 
 release/jeffrey.o: ../proyecto_final/jeffrey.cpp ../proyecto_final/jeffrey.h \
@@ -1571,7 +1584,8 @@ release/mainwindow.o: ../proyecto_final/mainwindow.cpp ../proyecto_final/mainwin
 		D:/qt/6.2.4/mingw_64/include/QtWidgets/qmenu.h \
 		D:/qt/6.2.4/mingw_64/include/QtGui/qaction.h \
 		D:/qt/6.2.4/mingw_64/include/QtWidgets/QStatusBar \
-		D:/qt/6.2.4/mingw_64/include/QtWidgets/qstatusbar.h
+		D:/qt/6.2.4/mingw_64/include/QtWidgets/qstatusbar.h \
+		../proyecto_final/game_over.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\proyecto_final\mainwindow.cpp
 
 release/menu.o: ../proyecto_final/menu.cpp ../proyecto_final/menu.h \

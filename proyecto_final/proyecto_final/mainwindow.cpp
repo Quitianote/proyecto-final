@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QGraphicsScene>
+#include "game_over.h"
+#include <cstdlib>
+#include <ctime>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -18,27 +21,18 @@ MainWindow::MainWindow(QWidget *parent)
     fondo->setPos(-250, -180);
     fondo->setFlag(QGraphicsItem::ItemIsMovable, false);
 
-
-/*
-    scene->setSceneRect(0,7,686,400);
-    scene->addRect(scene->sceneRect());
-*/
-
-
     jugador = new jeffrey(nullptr);
     jugador->setScale(1.3);
 
-    politico_1 = new politico(nullptr);
-    politico_1->setScale(1.3);
+    ui->puntaje->setText(QString::number(puntos));
+
+    crear_poli();
 
     soldado_1 = new soldado(nullptr);
     soldado_1->setScale(1.3);
 
-    jugador->posicion(110, -100);
+    jugador->posicion(210, -200);
     scene->addItem(jugador);
-
-    politico_1->posicion(50, 270);
-    scene->addItem(politico_1);
 
     soldado_1->posicion(25, 150);
     scene->addItem(soldado_1);
@@ -59,6 +53,11 @@ MainWindow::MainWindow(QWidget *parent)
     timer_salto = new QTimer;
     connect(timer_salto,SIGNAL(timeout()),this, SLOT(salto()));
 
+   /* timer_pol = new QTimer;
+    connect(timer_pol,SIGNAL(timeout()),this, SLOT(coli_pol()));*/
+
+
+
 
 }
 
@@ -66,6 +65,14 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::puntaje()
+{
+    puntos ++;
+    ui->puntaje->setText(QString::number(puntos));
+}
+
+
 
 void MainWindow::keyReleaseEvent(QKeyEvent *event){
 
@@ -89,10 +96,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
         }
     }
 
-    /*if(event->key()== Qt::Key_S && jugador->getY()<scene->height()-40){
-        jugador->setY(jugador->getY()+vel);
-    }*/
-
     if(event->key()== Qt::Key_D){
         if(!timer_lat_D->isActive()){
             timer_lat_D->start(10);
@@ -109,9 +112,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
     }
 
     if(event->key()== Qt::Key_Space){
-        if(!timer_caida->isActive()){
-            jugador->setVy(2);
-            timer_caida->start(15);
+        if(jugador->collidesWithItem(politico_1)){
+            //reproducir audio de tos
+            delete politico_1;
+            crear_poli();
+            puntaje();
         }
     }
 
@@ -148,8 +153,13 @@ void MainWindow::caida()
         jugador->setVy(jugador->getVy() + 9.8*0.1);
         jugador->setY(jugador->getY() + jugador->getVy()*0.1);
 
-        if(jugador->getY() < 400) jugador->posicion();
-        else timer_caida->stop();
+        if(jugador->getY() < 600) jugador->posicion();
+        else{
+            timer_caida->stop();
+            game_over *N =  new game_over;
+            N->show();
+            this->close();
+        }
 
     }
     else jugador->setVy(2);
@@ -235,7 +245,47 @@ bool MainWindow::col_x_D()
     return false;
 }
 
+void MainWindow::crear_poli()
+{
+    int posx = 0;
+    int posy = 0;
+    srand(time(0));
 
+    politico_1 = new politico(nullptr);
+    politico_1->setScale(1.3);
+
+    for(;;){
+        posx = rand()%1000;
+        if(posx%11 == 0 && num != 11){
+            num = 11;
+            posy = 310;
+            posx = -5 + (rand()%405);
+            break;
+        }
+        else if(posx%3 == 0 && num != 3){
+            num = 3;
+            posx = -110;
+            posy = 200;
+            break;
+        }
+        else if(posx%5 == 0 && num != 5){
+            num = 5;
+            posx = 610;
+            posy = 200;
+            break;
+        }
+        else if(posx%7 == 0 && num != 7){
+            num = 7;
+            posy = -20;
+            posx = 110 + (rand()%290);
+            break;
+        }
+    }
+
+    politico_1->posicion(posx, posy);
+    scene->addItem(politico_1);
+
+}
 
 /*void bola::mover(float dt)
 {

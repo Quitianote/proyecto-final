@@ -42,7 +42,9 @@ public:
     bool col_x_A();
     bool col_x_D();
 
+    void crear_poli();
 
+    void puntaje();
 
 private slots:
     void bala_mov(); 
@@ -53,9 +55,6 @@ private slots:
 
     void mov_lat_D();
     void mov_lat_A();
-    //void on_pushButton_clicked();
-    //void verify(menu *N);
-
 
 private:
     Ui::MainWindow *ui;
@@ -69,6 +68,10 @@ private:
     int vel;
     int vel_auto;
 
+    int num = 0;
+
+    int puntos = 0;
+
     QList<suelo*> orilla;
     QList<suelo*> lista_piso;
     QList<bala*> balas;
@@ -81,11 +84,9 @@ private:
     QTimer *timer_lat_D;
     QTimer *timer_lat_A;
     QTimer *timer_salto;
+    QTimer *timer_pol;
 
     QGraphicsPixmapItem* fondo;
-
-
-
 };
 
 #endif // MAINWINDOW_H

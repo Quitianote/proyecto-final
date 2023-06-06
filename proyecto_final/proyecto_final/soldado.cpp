@@ -12,7 +12,7 @@ void soldado::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 
 soldado::soldado(QGraphicsItem *carr):QGraphicsPixmapItem(carr)
 {
-   setPixmap(QPixmap(":/imagenes/soldado_1.png"));
+   setPixmap(QPixmap(":/imagenes/soldado_1 - copia.png"));
 }
 
 

@@ -9,10 +9,9 @@ void politico::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     painter->drawPixmap(0, 0, pixmap());
 }
 
-
 politico::politico(QGraphicsItem *carr):QGraphicsPixmapItem(carr)
 {
-    setPixmap(QPixmap(":/imagenes/politico_1.png"));
+    setPixmap(QPixmap(":/imagenes/politico_1 - copia.png"));
 }
 
 

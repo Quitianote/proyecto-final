@@ -11,11 +11,23 @@ game_over::game_over(QWidget *parent) :
     ui->graphicsView->setScene(scene);
     fondo = new QGraphicsPixmapItem(QPixmap(":/imagenes/GAME_OVER.png"));
     scene->addItem(fondo);
-    fondo->setPixmap(QPixmap(":/imagenes/GAME_OVER.png").scaled(800, 600));
+    fondo->setPixmap(QPixmap(":/imagenes/game_over.png").scaled(800, 600));
     fondo->setPos(-150, -180);
 }
 
 game_over::~game_over()
 {
     delete ui;
+}
+
+void game_over::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key()== Qt::Key_Space){
+        menu *N =  new menu;
+        N->show();
+        this->close();
+    }
+
+
+
 }
