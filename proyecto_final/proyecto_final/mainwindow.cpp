@@ -251,6 +251,11 @@ void MainWindow::fric_A()
         soldado_1->setY(soldado_1->getY() + soldado_1->getVy()*0.1);
 
         if(soldado_1->getY() < 400) soldado_1->posicion();
+        else{
+            timer_fric_A->stop();
+            scene->removeItem(soldado_1);
+            soldados.removeOne(soldado_1);
+        }
     }
 }/*
 void MainWindow::fric_A()
