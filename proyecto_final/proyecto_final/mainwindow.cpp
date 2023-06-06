@@ -28,18 +28,18 @@ MainWindow::MainWindow(QWidget *parent)
 
     crear_poli();
 
-    soldado_1 = new soldado(nullptr);
-    soldado_1->setScale(1.3);
-
     jugador->posicion(210, -200);
     scene->addItem(jugador);
 
-    soldado_1->posicion(25, 150);
-    scene->addItem(soldado_1);
+    soldados.append(new soldado(nullptr));
+    soldados.last()->posicion(25, 310);
+    soldados.last()->setScale(1.3);
+    scene->addItem(soldados.last());
 
     crear_suelo();
 
     jugador->setVy(2);
+
     timer_caida =  new QTimer;
     connect(timer_caida,SIGNAL(timeout()),this, SLOT(caida()));
     timer_caida->start(15);
@@ -55,8 +55,18 @@ MainWindow::MainWindow(QWidget *parent)
 
     timer_tiempo = new QTimer;
     connect(timer_tiempo,SIGNAL(timeout()),this, SLOT(tiempo()));
-
     timer_tiempo->start(1000);
+
+    timer_fric_A = new QTimer;
+    connect(timer_fric_A, SIGNAL(timeout()), this, SLOT(fric_A()));
+    timer_fric_D = new QTimer;
+    connect(timer_fric_D, SIGNAL(timeout()), this, SLOT(fric_D()));
+
+    timer_caida_sold = new QTimer;
+    connect(timer_caida_sold, SIGNAL(timeout()), this, SLOT(caida_sold()));
+    //timer_caida_sold->start(15);
+
+
 
 }
 
@@ -113,6 +123,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
             jugador->setPixmap(QPixmap(":/imagenes/jeffrey - izquierda - copia.png"));
             timer_lat_A->start(10);
         }
+        ult = 1;
     }
 
     if(event->key()== Qt::Key_D){
@@ -120,6 +131,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
             timer_lat_D->start(10);
             jugador->setPixmap(QPixmap(":/imagenes/jeffrey-derecha - copia.png"));
         }
+        ult = 2;
     }
 
     if(event->key()== Qt::Key_W){
@@ -127,6 +139,18 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
             timer_caida->stop();
             vel = 55;
             timer_salto->start(10);
+        }
+    }
+
+    if(event->key()== Qt::Key_F){
+        if(col_sold()){
+            if(ult == 1){
+                timer_fric_A->start(10);
+
+            }
+            else{
+                timer_fric_D->start(10);
+            }
         }
     }
 
@@ -176,13 +200,28 @@ void MainWindow::caida()
         else{
             timer_caida->stop();
             game_over *N =  new game_over;
-            N->setTotal(puntos);
             N->show();
             this->close();
         }
 
     }
-    else jugador->setVy(2);
+    else jugador->setVy(2);//para evitar que la velocidad de la caida aumente progresivamente
+}
+
+void MainWindow::caida_sold()
+{
+    if(!col_y_sold()){
+        soldado_1->setVy(soldado_1->getVy() + 9.8*0.1);
+        soldado_1->setY(soldado_1->getY() + soldado_1->getVy()*0.1);
+
+        if(soldado_1->getY() < 600) soldado_1->posicion();
+        else{
+            timer_caida->stop();
+            delete soldado_1;
+            soldados.clear();
+            crear_sold();
+        }
+    }
 }
 
 void MainWindow::mov_lat_D()
@@ -203,6 +242,28 @@ void MainWindow::mov_lat_A()
     }
 }
 
+void MainWindow::fric_A()
+{
+    vA -= 9.8*0.1;
+    soldado_1->setX(soldado_1->getX() - vA*0.1);
+    soldado_1->posicion();
+    if(vA <= 0){
+        timer_fric_A->stop();
+        vA = 60;
+    }
+}
+
+void MainWindow::fric_D()
+{
+    vD -= 9.8*0.1;
+    soldado_1->setX(soldado_1->getX() + vD*0.1);
+    soldado_1->posicion();
+    if(vD <= 0){
+        timer_fric_D->stop();
+        vD = 60;
+    }
+}
+
 bool MainWindow::col_y()//mira si esta pegado al piso
 {
     QList<suelo*>::iterator
@@ -216,6 +277,21 @@ bool MainWindow::col_y()//mira si esta pegado al piso
     }
     return false;
 }
+
+bool MainWindow::col_y_sold()//mira si esta pegado al piso
+{
+    QList<suelo*>::iterator
+            it (cubos.begin()),
+            end (cubos.end());
+    for (; it != end; ++it) {
+
+        if (soldado_1->collidesWithItem((*it)) && soldado_1->getY() + soldado_1->boundingRect().height() <= (*it)->getY()) {
+            return true;
+        }
+    }
+    return false;
+}
+
 
 bool MainWindow::col_y_arriba()
 {
@@ -265,6 +341,20 @@ bool MainWindow::col_x_D()
     return false;
 }
 
+bool MainWindow::col_sold()
+{
+    QList<soldado*>::iterator
+            it (soldados.begin()),
+            end (soldados.end());
+    for (; it != end; ++it) {
+        if (jugador->collidesWithItem((*it))) {
+            soldado_1 = *it;
+            return true;
+        }
+    }
+    return false;
+}
+
 void MainWindow::crear_poli()
 {
     int posx = 0;
@@ -305,6 +395,35 @@ void MainWindow::crear_poli()
     politico_1->posicion(posx, posy);
     scene->addItem(politico_1);
 
+}
+
+void MainWindow::crear_sold()
+{
+    int posx = 0;
+    int posy = 0;
+    srand(time(0));
+
+    soldados.append(new soldado(nullptr));
+    soldados.last()->setScale(1.3);
+
+    for(;;){
+        posx = rand()%1000;
+        if(posx%11 == 0 && num != 11){
+            num = 11;
+            posy = 310;
+            posx = -5 + (rand()%405);
+            break;
+        }
+        else if(posx%7 == 0 && num != 7){
+            num = 7;
+            posy = -20;
+            posx = 110 + (rand()%290);
+            break;
+        }
+    }
+
+    soldados.last()->posicion(posx, posy);
+    scene->addItem(soldados.last());
 }
 
 /*void bola::mover(float dt)

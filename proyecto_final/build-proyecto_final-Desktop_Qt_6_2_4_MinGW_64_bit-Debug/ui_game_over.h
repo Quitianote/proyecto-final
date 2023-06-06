@@ -36,6 +36,8 @@ public:
         total->setGeometry(QRect(90, 240, 51, 21));
         total->setStyleSheet(QString::fromUtf8("font: 20pt \"Impact\";\n"
 "background-color: rgb(255, 255, 255);"));
+        total->raise();
+        graphicsView->raise();
 
         retranslateUi(game_over);
 

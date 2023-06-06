@@ -9,6 +9,16 @@ void soldado::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     painter->drawPixmap(0, 0, pixmap());
 }
 
+float soldado::getVy() const
+{
+    return vy;
+}
+
+void soldado::setVy(float newVy)
+{
+    vy = newVy;
+}
+
 
 soldado::soldado(QGraphicsItem *carr):QGraphicsPixmapItem(carr)
 {

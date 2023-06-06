@@ -37,7 +37,7 @@ private slots:
 private:
     int x,y;
 
-    float vy = 0;
+    float vy = 2;
 };
 
 

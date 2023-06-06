@@ -40,6 +40,8 @@ background-color: rgb(255, 255, 255);</string>
     <string>TextLabel</string>
    </property>
   </widget>
+  <zorder>total</zorder>
+  <zorder>graphicsView</zorder>
  </widget>
  <resources/>
  <connections/>

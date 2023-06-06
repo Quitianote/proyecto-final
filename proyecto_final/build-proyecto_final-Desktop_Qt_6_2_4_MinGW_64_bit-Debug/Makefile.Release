@@ -1072,7 +1072,11 @@ release/game_over.o: ../proyecto_final/game_over.cpp ../proyecto_final/game_over
 		D:/qt/6.2.4/mingw_64/include/QtWidgets/qgraphicsview.h \
 		D:/qt/6.2.4/mingw_64/include/QtWidgets/qscrollarea.h \
 		D:/qt/6.2.4/mingw_64/include/QtWidgets/qabstractscrollarea.h \
-		D:/qt/6.2.4/mingw_64/include/QtWidgets/qframe.h
+		D:/qt/6.2.4/mingw_64/include/QtWidgets/qframe.h \
+		D:/qt/6.2.4/mingw_64/include/QtWidgets/QLabel \
+		D:/qt/6.2.4/mingw_64/include/QtWidgets/qlabel.h \
+		D:/qt/6.2.4/mingw_64/include/QtGui/qpicture.h \
+		D:/qt/6.2.4/mingw_64/include/QtGui/qtextdocument.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\game_over.o ..\proyecto_final\game_over.cpp
 
 release/jeffrey.o: ../proyecto_final/jeffrey.cpp ../proyecto_final/jeffrey.h \
@@ -1579,6 +1583,10 @@ release/mainwindow.o: ../proyecto_final/mainwindow.cpp ../proyecto_final/mainwin
 		D:/qt/6.2.4/mingw_64/include/QtWidgets/qscrollarea.h \
 		D:/qt/6.2.4/mingw_64/include/QtWidgets/qabstractscrollarea.h \
 		D:/qt/6.2.4/mingw_64/include/QtWidgets/qframe.h \
+		D:/qt/6.2.4/mingw_64/include/QtWidgets/QLabel \
+		D:/qt/6.2.4/mingw_64/include/QtWidgets/qlabel.h \
+		D:/qt/6.2.4/mingw_64/include/QtGui/qpicture.h \
+		D:/qt/6.2.4/mingw_64/include/QtGui/qtextdocument.h \
 		D:/qt/6.2.4/mingw_64/include/QtWidgets/QMenuBar \
 		D:/qt/6.2.4/mingw_64/include/QtWidgets/qmenubar.h \
 		D:/qt/6.2.4/mingw_64/include/QtWidgets/qmenu.h \

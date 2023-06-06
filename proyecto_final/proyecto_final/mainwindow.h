@@ -37,12 +37,16 @@ public:
     void crear_suelo();
 
     bool col_y();
+    bool col_y_sold();
     bool col_y_arriba();
 
     bool col_x_A();
     bool col_x_D();
 
+    bool col_sold();
+
     void crear_poli();
+    void crear_sold();
 
     void puntaje();
 
@@ -54,8 +58,12 @@ private slots:
     void salto();
 
     void caida();
+    void caida_sold();
 
     void tiempo();
+
+    void fric_A();
+    void fric_D();
 
     void mov_lat_D();
     void mov_lat_A();
@@ -72,6 +80,9 @@ private:
     int vel;
     int vel_auto;
 
+    float vA = 60;
+    float vD = 60;
+
     int num = 0;
 
     int puntos = 0;
@@ -82,15 +93,20 @@ private:
 
     int sold = 0;
 
+    int ult;
+
     QList<suelo*> orilla;
     QList<suelo*> lista_piso;
     QList<bala*> balas;
     QList<suelo*> cubos;
     QList<QGraphicsItem*> colisiones;
+    QList<soldado*> soldados;
 
-    QTimer *timer_sold;
+    QTimer *timer_fric_A;
+    QTimer *timer_fric_D;
     QTimer *timer_bala;
     QTimer *timer_caida;
+    QTimer *timer_caida_sold;
     QTimer *timer_lat_D;
     QTimer *timer_lat_A;
     QTimer *timer_salto;
