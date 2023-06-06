@@ -143,10 +143,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
             vA = 60;
             vD = 60;
             if(ult == 1){
+                if(timer_fric_D->isActive()) timer_fric_D->stop();
                 timer_fric_A->start(10);
 
             }
             else{
+                if(timer_fric_A->isActive()) timer_fric_A->stop();
                 timer_fric_D->start(10);
             }
         }
@@ -274,12 +276,24 @@ void MainWindow::fric_A()
 
 void MainWindow::fric_D()
 {
-    vD -= 9.8*0.1;
+    float G = 9.8*0.1;
+    vD -= G;//9.8*0.1;
     soldado_1->setX(soldado_1->getX() + vD*0.1);
     soldado_1->posicion();
     if(vD <= 0){
-        timer_fric_D->stop();
-        vD = 60;
+        //timer_fric_A->stop();
+        //vA = 60;
+        if(col_y_sold()){
+            vD = G;
+            soldado_1->setVy(2);
+        }
+        else vD = 9.8*0.1;
+    }
+    if(!col_y_sold()){
+        soldado_1->setVy(soldado_1->getVy() + 9.8*0.1);
+        soldado_1->setY(soldado_1->getY() + soldado_1->getVy()*0.1);
+
+        if(soldado_1->getY() < 400) soldado_1->posicion();
     }
 }
 
