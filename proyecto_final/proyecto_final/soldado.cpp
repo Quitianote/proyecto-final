@@ -62,3 +62,8 @@ void soldado::setScale(qreal scale) {
     QGraphicsPixmapItem::setScale(scale);
 }
 
+void soldado::pos2()
+{
+    setPos(x,y);
+}
+

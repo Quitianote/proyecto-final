@@ -13,6 +13,7 @@ public:
     soldado(QGraphicsItem *carr = nullptr);
     void setScale(qreal scale);
 
+    void pos2();
     void posicion();
     void posicion(int newX, int newY);
 

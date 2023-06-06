@@ -62,10 +62,6 @@ MainWindow::MainWindow(QWidget *parent)
     timer_fric_D = new QTimer;
     connect(timer_fric_D, SIGNAL(timeout()), this, SLOT(fric_D()));
 
-    timer_caida_sold = new QTimer;
-    connect(timer_caida_sold, SIGNAL(timeout()), this, SLOT(caida_sold()));
-    //timer_caida_sold->start(15);
-
 
 
 }
@@ -210,18 +206,7 @@ void MainWindow::caida()
 
 void MainWindow::caida_sold()
 {
-    if(!col_y_sold()){
-        soldado_1->setVy(soldado_1->getVy() + 9.8*0.1);
-        soldado_1->setY(soldado_1->getY() + soldado_1->getVy()*0.1);
 
-        if(soldado_1->getY() < 600) soldado_1->posicion();
-        else{
-            timer_caida->stop();
-            delete soldado_1;
-            soldados.clear();
-            crear_sold();
-        }
-    }
 }
 
 void MainWindow::mov_lat_D()
@@ -317,7 +302,7 @@ bool MainWindow::col_x_A()
         if (jugador->collidesWithItem((*it)) && jugador->getX() <= (*it)->getX() + (*it)->boundingRect().width() && jugador->getX() > (*it)->getX()) {
             if((*it)->getY() <= jugador->getY() + jugador->boundingRect().height()){
                 if(jugador->getY() >= (*it)->getY()) return true;
-                else if(jugador->getY() <= (*it)->getY());return true;
+                else if(jugador->getY() <= (*it)->getY()) return true;
             }
         }
     }
@@ -334,7 +319,7 @@ bool MainWindow::col_x_D()
         if (jugador->collidesWithItem((*it)) && jugador->getX() + jugador->boundingRect().width() <= (*it)->getX()) {
             if((*it)->getY() <= jugador->getY() + jugador->boundingRect().height()){
                 if(jugador->getY() >= (*it)->getY()) return true;
-                else if(jugador->getY() <= (*it)->getY());return true;
+                else if(jugador->getY() <= (*it)->getY()) return true;
             }
         }
     }
