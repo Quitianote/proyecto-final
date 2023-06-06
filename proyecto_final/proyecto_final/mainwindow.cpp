@@ -233,14 +233,15 @@ void MainWindow::mov_lat_A()
 
 void MainWindow::fric_A()
 {
-    vA -= 9.8*0.1;
+    float G = 9.8*0.1;
+    vA -= G;//9.8*0.1;
     soldado_1->setX(soldado_1->getX() - vA*0.1);
     soldado_1->posicion();
     if(vA <= 0){
         //timer_fric_A->stop();
         //vA = 60;
         if(col_y_sold()){
-            vA = 9.8*0.1;
+            vA = G;
             soldado_1->setVy(2);
         }
         else vA = 9.8*0.1;
