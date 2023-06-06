@@ -140,6 +140,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
 
     if(event->key()== Qt::Key_F){
         if(col_sold()){
+            vA = 60;
+            vD = 60;
             if(ult == 1){
                 timer_fric_A->start(10);
 
@@ -233,10 +235,40 @@ void MainWindow::fric_A()
     soldado_1->setX(soldado_1->getX() - vA*0.1);
     soldado_1->posicion();
     if(vA <= 0){
-        timer_fric_A->stop();
-        vA = 60;
+        //timer_fric_A->stop();
+        //vA = 60;
+        if(col_y_sold()){
+            vA = 9.8*0.1;
+        }
+
     }
-}
+    if(!col_y_sold()){
+        soldado_1->setVy(soldado_1->getVy() + 9.8*0.1);
+        soldado_1->setY(soldado_1->getY() + soldado_1->getVy()*0.1);
+
+        if(soldado_1->getY() < 400) soldado_1->posicion();
+    }
+}/*
+void MainWindow::fric_A()
+{
+    vA -= 9.8*0.1;
+    soldado_1->setX(soldado_1->getX() - vA*0.1);
+    soldado_1->posicion();
+    if(vA <= 0){
+        //timer_fric_A->stop();
+        //vA = 60;
+        if(col_y_sold()){
+            vA = 9.8*0.1;
+        }
+
+    }
+    if(!col_y_sold()){
+        soldado_1->setVy(soldado_1->getVy() + 9.8*0.1);
+        soldado_1->setY(soldado_1->getY() + soldado_1->getVy()*0.1);
+
+        if(soldado_1->getY() < 400) soldado_1->posicion();
+    }
+}*/
 
 void MainWindow::fric_D()
 {
