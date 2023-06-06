@@ -31,10 +31,10 @@ MainWindow::MainWindow(QWidget *parent)
     jugador->posicion(210, -200);
     scene->addItem(jugador);
 
-    soldados.append(new soldado(nullptr));
+    /*soldados.append(new soldado(nullptr));
     soldados.last()->posicion(200, 310);
     soldados.last()->setScale(1.3);
-    scene->addItem(soldados.last());
+    scene->addItem(soldados.last());*/
 
     crear_suelo();
 
@@ -62,6 +62,8 @@ MainWindow::MainWindow(QWidget *parent)
     timer_fric_D = new QTimer;
     connect(timer_fric_D, SIGNAL(timeout()), this, SLOT(fric_D()));
 
+    crear_sold();
+    crear_sold();
 
 
 }
@@ -74,17 +76,23 @@ MainWindow::~MainWindow()
 void MainWindow::puntaje()
 {
     puntos ++;
-    puntos += time_;
+
     ui->puntaje->setText(QString::number(puntos));
-    if(!timer_tiempo->isActive()){
+    if(!timer_tiempo->isActive() && !temp){//cuando llega a 0
+        puntos += time_;
         time_ = 11;
         timer_tiempo->start(1000);
     }
-    else{
+    else if(timer_tiempo->isActive() && !temp){//cuando aun sigue con tiempo de sobra
+        puntos += time_;
         timer_tiempo->stop();
         time_ = 11;
         timer_tiempo->start(1000);
     }
+    if(poli%4 == 0){
+        crear_sold();
+    }
+    temp = false;
 }
 
 int MainWindow::getPuntos()
@@ -237,7 +245,7 @@ void MainWindow::fric_A()
     vA -= G;//9.8*0.1;
     soldado_1->setX(soldado_1->getX() - vA*0.1);
     soldado_1->posicion();
-    if(vA <= 0){
+    if(vA <= 0 || col_s_A()){
         //timer_fric_A->stop();
         //vA = 60;
         if(col_y_sold()){
@@ -255,30 +263,17 @@ void MainWindow::fric_A()
             timer_fric_A->stop();
             scene->removeItem(soldado_1);
             soldados.removeOne(soldado_1);
-        }
-    }
-}/*
-void MainWindow::fric_A()
-{
-    vA -= 9.8*0.1;
-    soldado_1->setX(soldado_1->getX() - vA*0.1);
-    soldado_1->posicion();
-    if(vA <= 0){
-        //timer_fric_A->stop();
-        //vA = 60;
-        if(col_y_sold()){
-            vA = 9.8*0.1;
-            soldado_1->setVy(2);
-        }
-        else vA = 9.8*0.1;
-    }
-    if(!col_y_sold()){
-        soldado_1->setVy(soldado_1->getVy() + 9.8*0.1);
-        soldado_1->setY(soldado_1->getY() + soldado_1->getVy()*0.1);
+            puntos += 2;
+            temp = true;
+            puntaje();
+            crear_sold();
+            if(sold%5 == 0){
+                crear_sold();
+            }
 
-        if(soldado_1->getY() < 400) soldado_1->posicion();
+        }
     }
-}*/
+}
 
 void MainWindow::fric_D()
 {
@@ -286,7 +281,7 @@ void MainWindow::fric_D()
     vD -= G;//9.8*0.1;
     soldado_1->setX(soldado_1->getX() + vD*0.1);
     soldado_1->posicion();
-    if(vD <= 0){
+    if(vD <= 0 || col_s_D()){
         //timer_fric_A->stop();
         //vA = 60;
         if(col_y_sold()){
@@ -300,6 +295,19 @@ void MainWindow::fric_D()
         soldado_1->setY(soldado_1->getY() + soldado_1->getVy()*0.1);
 
         if(soldado_1->getY() < 400) soldado_1->posicion();
+        else{
+            timer_fric_D->stop();
+            scene->removeItem(soldado_1);
+            soldados.removeOne(soldado_1);
+            puntos += 2;
+            temp = true;
+            puntaje();
+            crear_sold();
+            if(sold%5 == 0){
+                crear_sold();
+            }
+
+        }
     }
 }
 
@@ -380,6 +388,40 @@ bool MainWindow::col_x_D()
     return false;
 }
 
+bool MainWindow::col_s_A()
+{
+    QList<suelo*>::iterator
+            it (cubos.begin()),
+            end (cubos.end());
+    for (; it != end; ++it) {
+
+        if (soldado_1->collidesWithItem((*it)) && soldado_1->getX() <= (*it)->getX() + (*it)->boundingRect().width() && soldado_1->getX() > (*it)->getX()) {
+            if((*it)->getY() <= soldado_1->getY() + soldado_1->boundingRect().height()){
+                if(soldado_1->getY() >= (*it)->getY()) return true;
+                else if(soldado_1->getY() <= (*it)->getY()) return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool MainWindow::col_s_D()
+{
+    QList<suelo*>::iterator
+            it (cubos.begin()),
+            end (cubos.end());
+    for (; it != end; ++it) {
+
+        if (soldado_1->collidesWithItem((*it)) && soldado_1->getX() + soldado_1->boundingRect().width() <= (*it)->getX()) {
+            if((*it)->getY() <= soldado_1->getY() + soldado_1->boundingRect().height()){
+                if(soldado_1->getY() >= (*it)->getY()) return true;
+                else if(soldado_1->getY() <= (*it)->getY()) return true;
+            }
+        }
+    }
+    return false;
+}
+
 bool MainWindow::col_sold()
 {
     QList<soldado*>::iterator
@@ -398,6 +440,9 @@ void MainWindow::crear_poli()
 {
     int posx = 0;
     int posy = 0;
+
+    poli ++;
+
     srand(time(0));
 
     politico_1 = new politico(nullptr);
@@ -440,6 +485,14 @@ void MainWindow::crear_sold()
 {
     int posx = 0;
     int posy = 0;
+    bool aux = false;
+
+    /*QList<soldado*>::iterator
+            it (soldados.begin()),
+            end (soldados.end());*/
+
+    sold ++;
+
     srand(time(0));
 
     soldados.append(new soldado(nullptr));
@@ -448,13 +501,13 @@ void MainWindow::crear_sold()
     for(;;){
         posx = rand()%1000;
         if(posx%11 == 0 && num != 11){
-            num = 11;
+            //num = 11;
             posy = 310;
             posx = -5 + (rand()%405);
             break;
         }
         else if(posx%7 == 0 && num != 7){
-            num = 7;
+            //num = 7;
             posy = -20;
             posx = 110 + (rand()%290);
             break;
@@ -463,6 +516,20 @@ void MainWindow::crear_sold()
 
     soldados.last()->posicion(posx, posy);
     scene->addItem(soldados.last());
+    /*for(; it != end; it ++){
+        if(soldados.last()->collidesWithItem((*it)) && soldados.last() != (*it)){
+            aux = true;
+            scene->removeItem(soldados.last());
+            soldados.removeOne(soldados.last());
+            break;
+        }
+        else aux = false;
+    }
+    if(!aux) break;*/
+
+
+
+
 }
 
 /*void bola::mover(float dt)

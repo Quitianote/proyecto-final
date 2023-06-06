@@ -43,6 +43,9 @@ public:
     bool col_x_A();
     bool col_x_D();
 
+    bool col_s_A();
+    bool col_s_D();
+
     bool col_sold();
 
     void crear_poli();
@@ -77,6 +80,8 @@ private:
     politico *politico_1;
     soldado *soldado_1;
 
+    bool temp = false;
+
     int vel;
     int vel_auto;
 
@@ -89,7 +94,7 @@ private:
 
     int time_ = 11;
 
-    int poli = 0;
+    int poli = 1;
 
     int sold = 0;
 
