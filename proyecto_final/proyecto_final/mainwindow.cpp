@@ -241,7 +241,7 @@ void MainWindow::fric_A()
             vA = 9.8*0.1;
             soldado_1->setVy(2);
         }
-
+        else vA = 9.8*0.1;
     }
     if(!col_y_sold()){
         soldado_1->setVy(soldado_1->getVy() + 9.8*0.1);
@@ -262,7 +262,7 @@ void MainWindow::fric_A()
             vA = 9.8*0.1;
             soldado_1->setVy(2);
         }
-
+        else vA = 9.8*0.1;
     }
     if(!col_y_sold()){
         soldado_1->setVy(soldado_1->getVy() + 9.8*0.1);
