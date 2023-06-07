@@ -4,16 +4,8 @@
 #include <QPainter>
 #include <QGraphicsItem>
 
-
-
 class bala: public QGraphicsItem
 {
-
-private:
-    int x;
-    int y;
-    int radio;
-
 public:
     bala(int rad);
     ~bala();
@@ -29,6 +21,10 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+private:
+    int x;
+    int y;
+    int radio;
 };
 
 #endif // BALA_H

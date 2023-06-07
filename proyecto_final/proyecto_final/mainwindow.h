@@ -36,6 +36,8 @@ public:
 
     void crear_suelo();
 
+    void disparar();
+
     bool col_y();
     bool col_y_sold();
     bool col_y_arriba();
@@ -56,7 +58,8 @@ public:
     int getPuntos();
 
 private slots:
-    void bala_mov(); 
+    void bala_D();
+    void bala_A();
 
     void salto();
 
@@ -64,6 +67,8 @@ private slots:
     void caida_sold();
 
     void tiempo();
+
+    void ver();
 
     void fric_A();
     void fric_D();
@@ -79,11 +84,13 @@ private:
     jeffrey *jugador;
     politico *politico_1;
     soldado *soldado_1;
+    soldado *soldado_disp;
 
     bool temp = false;
 
     int vel;
-    int vel_auto;
+
+    int dist;
 
     float vA = 60;
     float vD = 60;
@@ -109,13 +116,15 @@ private:
 
     QTimer *timer_fric_A;
     QTimer *timer_fric_D;
-    QTimer *timer_bala;
+    QTimer *timer_bala_A;
+    QTimer *timer_bala_D;
     QTimer *timer_caida;
     QTimer *timer_caida_sold;
     QTimer *timer_lat_D;
     QTimer *timer_lat_A;
     QTimer *timer_salto;
     QTimer *timer_tiempo;
+    QTimer *timer_ver;
 
     QGraphicsPixmapItem* fondo;
 };

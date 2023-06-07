@@ -65,6 +65,15 @@ MainWindow::MainWindow(QWidget *parent)
     crear_sold();
     crear_sold();
 
+    timer_bala_A = new QTimer;
+    connect(timer_bala_A, SIGNAL(timeout()), this, SLOT(bala_A()));
+    timer_bala_D = new QTimer;
+    connect(timer_bala_D, SIGNAL(timeout()), this, SLOT(bala_D()));
+
+    timer_ver = new QTimer;
+    connect(timer_ver, SIGNAL(timeout()), this, SLOT(ver()));
+
+    timer_ver->start(10);
 
 }
 
@@ -105,6 +114,28 @@ void MainWindow::tiempo()
     time_ --;
     ui->tiempo->setText(QString::number(time_));
     if(time_ == 0) timer_tiempo->stop();
+}
+
+void MainWindow::ver()
+{
+    QList<soldado*>::iterator
+            it (soldados.begin()),
+            end(soldados.end());
+
+    for(; it != end; it ++){
+        if((*it)->getY() == jugador->getY()){
+            int sold = (*it)->getX();
+            if(sold < 0) sold *= -1;
+            int jug = jugador->getX();
+            if(jug < 0) jug *= -1;
+            dist = sold - jug;
+
+            if(dist <= 20 && dist >= -20){
+                soldado_disp = (*it);
+                disparar();
+            }
+        }
+    }
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *event){
@@ -175,8 +206,46 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
     jugador->posicion();
 }
 
+void MainWindow::disparar()
+{
+    balas.append(new bala(5));
+    balas.last()->posicion(soldado_disp->getX(),soldado_disp->getY());
+    if(dist >= 0) timer_bala_A->start(1000);
+    else timer_bala_D->start(1000);
+}
+void MainWindow::bala_D()
+{
+    QList<bala*>::iterator
+            it (balas.begin()),
+            end (balas.end());
 
-void MainWindow::bala_mov()
+    float vX = 20;
+
+    for( ; it != end; it ++){
+        (*it)->setX((*it)->getX() + vX*0.1);
+        /*if (!bala_temp->collidingItems().isEmpty()){
+
+            for(auto re = rect.begin() ;re != rect.end(); ++re){
+                auto f1 = *re;
+                if (bala_temp->collidingItems().first() == f1){
+                    balas.removeOne(bala_temp);
+                    scene->removeItem(bala_temp);
+                    rect.removeOne(f1);
+                    scene->removeItem(f1);
+                    break;
+                }
+            }
+        }
+        if (bala_temp->getY()<20){
+
+            balas.removeOne(bala_temp);
+            scene->removeItem(bala_temp);
+        }*/
+
+    }
+}
+
+void MainWindow::bala_A()
 {
 
 }
