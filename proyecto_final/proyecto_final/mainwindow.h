@@ -64,7 +64,6 @@ private slots:
     void salto();
 
     void caida();
-    void caida_sold();
 
     void tiempo();
 
@@ -96,6 +95,7 @@ private:
     float vD = 60;
 
     int num = 0;
+    int num_sold = 0;
 
     int puntos = 0;
 

@@ -73,7 +73,7 @@ MainWindow::MainWindow(QWidget *parent)
     timer_ver = new QTimer;
     connect(timer_ver, SIGNAL(timeout()), this, SLOT(ver()));
 
-    timer_ver->start(500);
+    timer_ver->start(800);
 
 }
 
@@ -135,9 +135,11 @@ void MainWindow::ver()
             if(jug < 0) jug *= -1;
             dist = sold - jug;
 
-            if(dist <= 100 && dist >= -100){
+            if(dist <= 150 && dist >= -150){
                 soldado_disp = (*it);
                 disparar();
+                if(dist > 0) soldado_disp->setPixmap(QPixmap(":/imagenes/soldado_1 - izquierda.png"));
+                else if(dist < 0) soldado_disp->setPixmap(QPixmap(":/imagenes/soldado_1 - copia.png"));
             }
         }
     }
@@ -215,12 +217,14 @@ void MainWindow::disparar()
 {
     if(dist >= 0){
         balas_A.append(new bala(10));
-        balas_A.last()->posicion(soldado_disp->getX(),soldado_disp->getY());
+        balas_A.last()->posicion(soldado_disp->getX(),soldado_disp->getY() + 45);
+
         scene->addItem(balas_A.last());
     }
     else if(dist <= 0){
         balas_D.append(new bala(10));
-        balas_D.last()->posicion(soldado_disp->getX(),soldado_disp->getY() + 50);
+        balas_D.last()->posicion(soldado_disp->getX() + 50,soldado_disp->getY() + 45);
+
         scene->addItem(balas_D.last());
     }
 
@@ -239,6 +243,19 @@ void MainWindow::bala_A()
     for(; it != end; it ++){
         (*it)->setX((*it)->getX() - vX*0.1);
         (*it)->posicion();
+        if(jugador->collidesWithItem((*it))){
+            timer_caida->stop();
+            timer_ver->stop();
+            timer_bala_A->stop();
+            timer_bala_D->stop();
+            game_over *N =  new game_over;
+            N->show();
+            this->close();
+        }
+        if((*it)->getX() < -250){
+            balas_A.removeOne((*it));
+            scene->removeItem((*it));
+        }
     }
 }
 
@@ -247,15 +264,26 @@ void MainWindow::bala_D()
     QList<bala*>::iterator
             it (balas_D.begin()),
             end (balas_D.end());
+    QList<suelo*>::iterator
+            ini (cubos.begin()),
+            endi (cubos.end());
 
     float vX = 20;
 
     for(; it != end; it ++){
         (*it)->setX((*it)->getX() + vX*0.1);
         (*it)->posicion();
-        /*if (!bala_temp->collidingItems().isEmpty()){
-
-            for(auto re = rect.begin() ;re != rect.end(); ++re){
+        if(jugador->collidesWithItem((*it))){
+            timer_caida->stop();
+            timer_ver->stop();
+            timer_bala_A->stop();
+            timer_bala_D->stop();
+            game_over *N =  new game_over;
+            N->show();
+            this->close();
+        }
+        if (!bala_temp->collidingItems().isEmpty()){
+            for(;re != rect.end(); ++re){
                 auto f1 = *re;
                 if (bala_temp->collidingItems().first() == f1){
                     balas.removeOne(bala_temp);
@@ -266,12 +294,10 @@ void MainWindow::bala_D()
                 }
             }
         }
-        if (bala_temp->getY()<20){
-
-            balas.removeOne(bala_temp);
-            scene->removeItem(bala_temp);
-        }*/
-
+        if((*it)->getX() > 850){
+            balas_D.removeOne((*it));
+            scene->removeItem((*it));
+        }
     }
 }
 
@@ -308,11 +334,6 @@ void MainWindow::caida()
 
     }
     else jugador->setVy(2);//para evitar que la velocidad de la caida aumente progresivamente
-}
-
-void MainWindow::caida_sold()
-{
-
 }
 
 void MainWindow::mov_lat_D()
@@ -594,14 +615,14 @@ void MainWindow::crear_sold()
 
     for(;;){
         posx = rand()%1000;
-        if(posx%11 == 0 && num != 11){
-            //num = 11;
+        if(posx%11 == 0 && num_sold != 11){
+            num_sold = 11;
             posy = 310;
             posx = -5 + (rand()%405);
             break;
         }
-        else if(posx%7 == 0 && num != 7){
-            //num = 7;
+        else if(posx%7 == 0 && num_sold != 7){
+            num_sold = 7;
             posy = -20;
             posx = 110 + (rand()%290);
             break;

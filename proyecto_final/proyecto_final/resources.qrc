@@ -13,5 +13,7 @@
         <file>imagenes/game_over.png</file>
         <file>imagenes/politico_1 - copia.png</file>
         <file>imagenes/soldado_1 - copia.png</file>
+        <file>imagenes/politico_1 - izquierda.png</file>
+        <file>imagenes/soldado_1 - izquierda.png</file>
     </qresource>
 </RCC>

@@ -141,6 +141,7 @@ debug/qrc_resources.cpp: ../proyecto_final/resources.qrc \
 		../proyecto_final/imagenes/jeffrey\ -\ izquierda.png \
 		../proyecto_final/imagenes/cubo\ -\ copia.png \
 		../proyecto_final/imagenes/soldado_1.png \
+		../proyecto_final/imagenes/politico_1\ -\ izquierda.png \
 		../proyecto_final/imagenes/game_over.png \
 		../proyecto_final/imagenes/jeffrey\ -\ izquierda\ -\ copia.png \
 		../proyecto_final/imagenes/jeffrey-derecha.png \
@@ -149,6 +150,7 @@ debug/qrc_resources.cpp: ../proyecto_final/resources.qrc \
 		../proyecto_final/imagenes/wallpaperbetter.com_7680x4320.jpg \
 		../proyecto_final/imagenes/cubo.png \
 		../proyecto_final/imagenes/soldado_1\ -\ copia.png \
+		../proyecto_final/imagenes/soldado_1\ -\ izquierda.png \
 		../proyecto_final/imagenes/fondo_menu.png \
 		../proyecto_final/imagenes/jeffrey-derecha\ -\ copia.png
 	D:\qt\6.2.4\mingw_64\bin\rcc.exe -name resources ..\proyecto_final\resources.qrc -o debug\qrc_resources.cpp
