@@ -107,8 +107,6 @@ private:
 
     int ult;
 
-    QList<suelo*> orilla;
-    QList<suelo*> lista_piso;
     QList<bala*> balas_A;
     QList<bala*> balas_D;
     QList<suelo*> cubos;
