@@ -237,6 +237,9 @@ void MainWindow::bala_A()
     QList<bala*>::iterator
             it (balas_A.begin()),
             end (balas_A.end());
+    QList<suelo*>::iterator
+            ini (cubos.begin()),
+            endi (cubos.end());
 
     float vX = 20;
 
@@ -251,6 +254,15 @@ void MainWindow::bala_A()
             game_over *N =  new game_over;
             N->show();
             this->close();
+        }
+        if (!(*it)->collidingItems().isEmpty()){
+            for(; ini != endi; ini ++){
+                if ((*it)->collidesWithItem((*ini))){
+                    balas_D.removeOne((*it));
+                    scene->removeItem((*it));
+                    break;
+                }
+            }
         }
         if((*it)->getX() < -250){
             balas_A.removeOne((*it));
@@ -282,14 +294,11 @@ void MainWindow::bala_D()
             N->show();
             this->close();
         }
-        if (!bala_temp->collidingItems().isEmpty()){
-            for(;re != rect.end(); ++re){
-                auto f1 = *re;
-                if (bala_temp->collidingItems().first() == f1){
-                    balas.removeOne(bala_temp);
-                    scene->removeItem(bala_temp);
-                    rect.removeOne(f1);
-                    scene->removeItem(f1);
+        if (!(*it)->collidingItems().isEmpty()){
+            for(; ini != endi; ini ++){
+                if ((*it)->collidesWithItem((*ini))){
+                    balas_D.removeOne((*it));
+                    scene->removeItem((*it));
                     break;
                 }
             }
