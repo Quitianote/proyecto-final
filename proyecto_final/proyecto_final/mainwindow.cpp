@@ -73,7 +73,7 @@ MainWindow::MainWindow(QWidget *parent)
     timer_ver = new QTimer;
     connect(timer_ver, SIGNAL(timeout()), this, SLOT(ver()));
 
-    timer_ver->start(10);
+    timer_ver->start(500);
 
 }
 
@@ -123,14 +123,19 @@ void MainWindow::ver()
             end(soldados.end());
 
     for(; it != end; it ++){
-        if((*it)->getY() == jugador->getY()){
+        int sold_y = (*it)->getY();
+        int jug_y = jugador->getY();
+        if(sold_y < 0) sold_y *= -1;
+        if(jug_y < 0) jug_y *= -1;
+        int dist_temp = jug_y -sold_y;
+        if(dist_temp >= -10 && dist_temp <= 10){
             int sold = (*it)->getX();
             if(sold < 0) sold *= -1;
             int jug = jugador->getX();
             if(jug < 0) jug *= -1;
             dist = sold - jug;
 
-            if(dist <= 20 && dist >= -20){
+            if(dist <= 100 && dist >= -100){
                 soldado_disp = (*it);
                 disparar();
             }
@@ -208,21 +213,46 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
 
 void MainWindow::disparar()
 {
-    balas.append(new bala(5));
-    balas.last()->posicion(soldado_disp->getX(),soldado_disp->getY());
-    if(dist >= 0) timer_bala_A->start(1000);
-    else timer_bala_D->start(1000);
+    if(dist >= 0){
+        balas_A.append(new bala(10));
+        balas_A.last()->posicion(soldado_disp->getX(),soldado_disp->getY());
+        scene->addItem(balas_A.last());
+    }
+    else if(dist <= 0){
+        balas_D.append(new bala(10));
+        balas_D.last()->posicion(soldado_disp->getX(),soldado_disp->getY() + 50);
+        scene->addItem(balas_D.last());
+    }
+
+    if(dist >= 0 && !timer_bala_A->isActive()) timer_bala_A->start(10);
+    else if(dist <= 0 && !timer_bala_D->isActive()) timer_bala_D->start(10);
 }
-void MainWindow::bala_D()
+
+void MainWindow::bala_A()
 {
     QList<bala*>::iterator
-            it (balas.begin()),
-            end (balas.end());
+            it (balas_A.begin()),
+            end (balas_A.end());
 
     float vX = 20;
 
-    for( ; it != end; it ++){
+    for(; it != end; it ++){
+        (*it)->setX((*it)->getX() - vX*0.1);
+        (*it)->posicion();
+    }
+}
+
+void MainWindow::bala_D()
+{
+    QList<bala*>::iterator
+            it (balas_D.begin()),
+            end (balas_D.end());
+
+    float vX = 20;
+
+    for(; it != end; it ++){
         (*it)->setX((*it)->getX() + vX*0.1);
+        (*it)->posicion();
         /*if (!bala_temp->collidingItems().isEmpty()){
 
             for(auto re = rect.begin() ;re != rect.end(); ++re){
@@ -243,11 +273,6 @@ void MainWindow::bala_D()
         }*/
 
     }
-}
-
-void MainWindow::bala_A()
-{
-
 }
 
 void MainWindow::salto()

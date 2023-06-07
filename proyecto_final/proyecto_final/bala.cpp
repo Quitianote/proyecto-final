@@ -54,7 +54,7 @@ QRectF bala::boundingRect() const
 
 void bala::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setBrush(Qt::darkBlue);
+    painter->setBrush(Qt::yellow);
     painter->drawEllipse(boundingRect());
     Q_UNUSED(option);
     Q_UNUSED(widget);
